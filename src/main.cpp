@@ -1,7 +1,12 @@
-#include <iostream>
+#include <QApplication>
+
+#include "inputWindow.hpp"
 
 int main(int argc, char** argv){
-	std::cout << "Version: " << VERSION_MAJOR << "." << VERSION_MINOR << "." << VERSION_PATCH << std::endl;
+	QApplication application(argc, argv);
 
-	return 0;
+	inputWindow widget;
+	widget.show();
+
+	return application.exec();
 }

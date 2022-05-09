@@ -1,5 +1,8 @@
 #include "inputWindow.hpp"
 
+#include "lib/bill.hpp"
+#include "lib/fileHandling.hpp"
+
 inputWindow::inputWindow(QWidget* parent) : QWidget(parent) {
 	// Create widgets
 	m_lMain = new QVBoxLayout(this);
@@ -46,8 +49,12 @@ void inputWindow::clear() {
 }
 
 void inputWindow::add() {
-	// TODO: Write data to file.
+	bill b;
+	b.date = m_leDate->text().toStdString();
+	b.shop = m_cbShop->currentText().toStdString();
+	b.price = std::stof(m_lePrice->text().toStdString());
 
+	addBillToFile(b);
 }
 
 inputWindow::~inputWindow() {

@@ -1,17 +1,27 @@
-# ----- Get QT6 -----
+# ----- External Libraries -----
 find_package(Qt6 REQUIRED COMPONENTS Gui Widgets)
+include(ExternalLibs.cmake)
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON) # Qt6 Settings
+set(CMAKE_AUTORCC ON) # Qt6 Settings
+set(CMAKE_AUTOUIC ON) # Qt6 Settings
+
 
 # Settings
-include(CustomCommands.cmake)
 set(targetName "billTracker")
 
 # Get files to build
-set(headers inputWindow.hpp)
-set(sources main.cpp inputWindow.cpp)
+set(headers
+    inputWindow.hpp
+    lib/bill.hpp
+    lib/fileHandling.hpp
+)
+set(sources
+    main.cpp
+    inputWindow.cpp
+    lib/bill.cpp
+    lib/fileHandling.cpp
+)
 
 # Create library
 add_executable(${targetName}
@@ -22,7 +32,7 @@ add_executable(${targetName}
 
 
 # Link to thread module for maths functions.
-target_link_libraries(${targetName} PRIVATE Qt6::Gui Qt6::Widgets)
+target_link_libraries(${targetName} PRIVATE Qt6::Gui Qt6::Widgets nlohmann_json::nlohmann_json)
 set_target_properties(${targetName} PROPERTIES FOLDER "${ideFolderSource}")
 
 # Setup project settings

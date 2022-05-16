@@ -14,19 +14,30 @@ public:
 	inputWindow(QWidget* parent = nullptr);
 	~inputWindow();
 
+private:
+	void setupInputMasks();
+	void setupConnections();
+
+	//! Retrieve and display data from global json file
+	void fillStandardData();
+
 private slots:
-	void clear();
-	void add();
+	void clearInputFields();
+	void writeBillToFile();
+	void updateSubCategories(int newCategory);
 
 private:
 	QVBoxLayout* m_lMain;
 	QHBoxLayout* m_lInputs;
 	QHBoxLayout* m_lButtons;
 
-	QLineEdit* m_leDate;  // TODO: Update to calendar type widget
+	QLineEdit* m_leDate;  // NOTE: Could be updated to a calendar widget.
 	QComboBox* m_cbShop;
+	QComboBox* m_cbCategory;
+	QComboBox* m_cbCategorySub;
 	QLineEdit* m_lePrice;
 
 	QPushButton* m_bAdd;
 	QPushButton* m_bClear;
 };
+

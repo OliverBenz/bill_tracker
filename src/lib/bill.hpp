@@ -1,21 +1,20 @@
 #pragma once
 
-#ifndef NDEBUG
-#include <iostream>
-#endif
-
 #include <string>
 #include <nlohmann/json.hpp>
 
+namespace bill {
+
 struct bill {
 	std::string date;
-	std::string shop;
+	int shop;
+	int category;
+	int subCategory;
 
 	float price;
 };
-
-
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(bill, date, shop, price)
-// TODO: Add debug output with json.
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(bill, date, shop, price, category, subCategory)
 
 std::string todaysDate();
+
+}

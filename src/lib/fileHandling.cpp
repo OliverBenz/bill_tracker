@@ -4,34 +4,32 @@
 #include <sstream>
 #include <fstream>
 
-/*
-	{
-		"bills": [
+namespace bill {
 
-		],
- 		"shops": [
+// TODO: We parse whole data file every time we want to read or write anything.
+// 		 This is awful but this app will never scale so I don't care.
+//       IF wish for fix is there: We could make a separate file for every month like:
+//       	"2022-05_data.json", "2022-06_data.json", etc
 
- 		]
-	}
-*/
+constexpr char filenameGlobal[] = "data/global.json";
+constexpr char filenameData[] = "data/data.json";
 
 bool addBillToFile(const bill& newBill) {
-	const std::string fileName = "data/data.json";
-	std::ifstream input(fileName);
+	std::ifstream input(filenameData);
 
 	nlohmann::json jsonFile = nlohmann::json::parse(input);
 
 	if(jsonFile.find("bills") != jsonFile.end())
 		jsonFile.at("bills").push_back(newBill);
 
-	std::ofstream output(fileName);
+	std::ofstream output(filenameData);
 	output << std::setw(4) << jsonFile << std::endl;
 
 	return false;
 }
 
 std::vector<bill> getBills(const std::string& date) {
-	std::ifstream jsonFile("data/data.json");
+	std::ifstream jsonFile(filenameData);
 	nlohmann::json json =  nlohmann::json::parse(jsonFile);
 
 	std::vector<bill> result;
@@ -51,18 +49,43 @@ std::vector<bill> getBills(const std::string& date) {
 	return result;
 }
 
-std::vector<std::string> getShops() {
-	std::ifstream jsonFile{"data/data.json"};
+std::vector<shop> getShops() {
+	std::ifstream jsonFile(filenameGlobal);
 	nlohmann::json json = nlohmann::json::parse(jsonFile);
 
-	std::set<std::string> shops;
-	for(const nlohmann::json& jBill : json.at("bills")) {
-		std::string temp;
-		nlohmann::from_json(jBill.at("shop"), temp);
-		shops.insert(temp);
+	std::vector<shop> shops;
+	nlohmann::from_json(json.at("shops"), shops);
+
+	return shops;
+}
+
+std::vector<category> getCategories() {
+	std::ifstream jsonFile(filenameGlobal);
+	nlohmann::json json = nlohmann::json::parse(jsonFile);
+
+	std::vector<category> categories;
+	nlohmann::from_json(json.at("categories"), categories);
+
+	return categories;
+}
+
+std::vector<subcategory> getSubCategories(int categoryId) {
+	std::ifstream jsonFile(filenameGlobal);
+	nlohmann::json json = nlohmann::json::parse(jsonFile);
+
+	if(json.find("categories") == json.end())
+		return {};
+
+	std::vector<subcategory> subcats;
+	for(const auto& j : json.at("categories")) {
+		const int id = j.at("id").get<int>();
+		if(id == categoryId) {
+			nlohmann::from_json(j.at("subCategories"), subcats);
+			break;
+		}
 	}
 
-	std::vector<std::string> result(shops.begin(), shops.end());
+	return subcats;
+}
 
-	return result;
 }

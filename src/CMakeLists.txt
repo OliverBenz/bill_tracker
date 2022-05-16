@@ -14,6 +14,8 @@ set(targetName "billTracker")
 set(headers
     inputWindow.hpp
     lib/bill.hpp
+    lib/shop.hpp
+    lib/category.hpp
     lib/fileHandling.hpp
 )
 set(sources

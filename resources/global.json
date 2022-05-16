@@ -1,0 +1,20 @@
+{
+	"shops": [
+		{
+			"id": 0,
+			"name": "Shop Name"
+		}
+	],
+	"categories": [
+		{
+			"id": 0,
+			"name": "Category Name",
+			"subCategories": [
+				{
+					"id": 0,
+					"name": "Sub Category Name"
+				}
+			]
+		}
+	]
+}

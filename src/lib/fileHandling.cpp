@@ -4,7 +4,7 @@
 #include <sstream>
 #include <fstream>
 
-namespace bill {
+namespace lib {
 
 // TODO: We parse whole data file every time we want to read or write anything.
 // 		 This is awful but this app will never scale so I don't care.

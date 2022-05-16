@@ -1,5 +1,6 @@
 #include "inputWindow.hpp"
 
+#include <iostream>
 #include "lib/bill.hpp"
 #include "lib/shop.hpp"
 #include "lib/category.hpp"
@@ -56,18 +57,13 @@ void inputWindow::setupConnections() {
 }
 
 void inputWindow::fillStandardData() {
-	auto shops = bill::getShops();
+	auto shops = lib::getShops();
 	for (const auto& shop : shops)
 		m_cbShop->insertItem(shop.id, QString(shop.name.c_str()));
 
-	auto categories = bill::getCategories();
+	auto categories = lib::getCategories();
 	for(const auto& category : categories)
 		m_cbCategory->insertItem(category.id, QString(category.name.c_str()));
-
-	if(categories.size() > 0) {
-		for(const auto& subcat : categories[0].subCategories)
-			m_cbCategorySub->insertItem(subcat.id, QString(subcat.name.c_str()));
-	}
 }
 
 inputWindow::~inputWindow() {
@@ -94,7 +90,7 @@ void inputWindow::clearInputFields() {
 }
 
 void inputWindow::writeBillToFile() {
-	bill::bill b;
+	lib::bill b;
 	b.date = m_leDate->text().toStdString();
 	b.shop = m_cbShop->currentIndex();
 	b.price = std::stof(m_lePrice->text().toStdString());
@@ -102,13 +98,14 @@ void inputWindow::writeBillToFile() {
 	b.category = m_cbCategory->currentIndex();
 	b.subCategory = m_cbCategorySub->currentIndex();
 
-	bill::addBillToFile(b);
+	lib::addBillToFile(b);
 }
 
 void inputWindow::updateSubCategories(const int newCategory) {
-	const auto subcats = bill::getSubCategories(newCategory);
+	const auto subcats = lib::getSubCategories(newCategory);
 	m_cbCategorySub->clear();
 
+	std::cerr << subcats.size();
 	for (const auto& cat : subcats)
 		m_cbCategorySub->insertItem(cat.id, QString(cat.name.c_str()));
 }

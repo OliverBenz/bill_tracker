@@ -3,7 +3,7 @@
 #include <string>
 #include <nlohmann/json.hpp>
 
-namespace bill {
+namespace lib {
 
 struct shop {
 	int id;

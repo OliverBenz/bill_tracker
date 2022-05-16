@@ -3,7 +3,7 @@
 #include <string>
 #include <nlohmann/json.hpp>
 
-namespace bill {
+namespace lib {
 
 struct subcategory {
 	int id = -1;        // -1 if no subcategory exists

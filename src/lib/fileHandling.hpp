@@ -6,7 +6,7 @@
 #include "shop.hpp"
 #include "category.hpp"
 
-namespace bill {
+namespace lib {
 
 bool addBillToFile(const bill& newBill);
 

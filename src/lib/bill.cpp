@@ -3,7 +3,7 @@
 #include <chrono>
 #include <sstream>
 
-namespace bill {
+namespace lib {
 
 std::string todaysDate()
 {

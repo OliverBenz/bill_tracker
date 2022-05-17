@@ -13,6 +13,7 @@ set(targetName "billTracker")
 # Get files to build
 set(headers
     inputWindow.hpp
+    mainWindow.hpp
     lib/bill.hpp
     lib/shop.hpp
     lib/category.hpp
@@ -21,6 +22,7 @@ set(headers
 set(sources
     main.cpp
     inputWindow.cpp
+    mainWindow.cpp
     lib/bill.cpp
     lib/fileHandling.cpp
 )

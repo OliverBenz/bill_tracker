@@ -1,6 +1,5 @@
 #include "inputWindow.hpp"
 
-#include <iostream>
 #include "lib/bill.hpp"
 #include "lib/shop.hpp"
 #include "lib/category.hpp"
@@ -9,8 +8,8 @@
 inputWindow::inputWindow(QWidget* parent) : QWidget(parent) {
 	// Create widgets
 	m_lMain = new QVBoxLayout(this);
-	m_lInputs = new QHBoxLayout(this);
-	m_lButtons = new QHBoxLayout(this);
+	m_lInputs = new QHBoxLayout();
+	m_lButtons = new QHBoxLayout();
 
 	m_leDate = new QLineEdit(this);
 	m_cbShop = new QComboBox(this);
@@ -49,8 +48,6 @@ void inputWindow::setupInputMasks() {
 }
 
 void inputWindow::setupConnections() {
-	// TODO: ComboBoxes currentIndexChanged(int)
-
 	connect(m_bAdd, SIGNAL(clicked()), this, SLOT(writeBillToFile()));
 	connect(m_bClear, SIGNAL(clicked()), this, SLOT(clearInputFields()));
 	connect(m_cbCategory, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSubCategories(int)));
@@ -67,18 +64,18 @@ void inputWindow::fillStandardData() {
 }
 
 inputWindow::~inputWindow() {
-	delete m_lMain;
-	delete m_lInputs;
-	delete m_lButtons;
+	delete m_bClear;
+	delete m_bAdd;
 
-	delete m_leDate;
-	delete m_cbShop;
+	delete m_lePrice;
 	delete m_cbCategorySub;
 	delete m_cbCategory;
-	delete m_lePrice;
+	delete m_cbShop;
+	delete m_leDate;
 
-	delete m_bAdd;
-	delete m_bClear;
+	delete m_lButtons;
+	delete m_lInputs;
+	delete m_lMain;
 }
 
 // Slots
@@ -99,13 +96,14 @@ void inputWindow::writeBillToFile() {
 	b.subCategory = m_cbCategorySub->currentIndex();
 
 	lib::addBillToFile(b);
+
+	clearInputFields();
 }
 
 void inputWindow::updateSubCategories(const int newCategory) {
 	const auto subcats = lib::getSubCategories(newCategory);
 	m_cbCategorySub->clear();
 
-	std::cerr << subcats.size();
 	for (const auto& cat : subcats)
 		m_cbCategorySub->insertItem(cat.id, QString(cat.name.c_str()));
 }

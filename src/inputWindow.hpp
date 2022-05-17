@@ -38,6 +38,6 @@ private:
 	QLineEdit* m_lePrice;
 
 	QPushButton* m_bAdd;
-	QPushButton* m_bClear;
+	QPushButton* m_bClear;  // TODO: Remove this button?
 };
 

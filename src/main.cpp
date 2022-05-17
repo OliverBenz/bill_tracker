@@ -1,11 +1,12 @@
 #include <QApplication>
 
 #include "inputWindow.hpp"
+//#include "displayWindow.hpp"
+#include "mainWindow.hpp"
 
 int main(int argc, char** argv){
 	QApplication application(argc, argv);
-
-	inputWindow widget;
+	mainWindow widget;
 	widget.show();
 
 	return application.exec();

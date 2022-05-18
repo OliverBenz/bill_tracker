@@ -15,6 +15,5 @@ struct bill {
 };
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(bill, date, shop, price, category, subCategory)
 
-std::string todaysDate();
 
 }

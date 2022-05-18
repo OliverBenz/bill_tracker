@@ -4,6 +4,10 @@
 #include "lib/shop.hpp"
 #include "lib/category.hpp"
 #include "lib/fileHandling.hpp"
+#include "lib/dateHandler.hpp"
+
+#include <sstream>
+#include <locale>
 
 inputWindow::inputWindow(QWidget* parent) : QWidget(parent) {
 	// Create widgets
@@ -87,13 +91,27 @@ void inputWindow::clearInputFields() {
 }
 
 void inputWindow::writeBillToFile() {
+	if(!lib::dateIsValid(m_leDate->text().toStdString())) {
+		return; // TODO: With a message maybe.
+	}
+
 	lib::bill b;
 	b.date = m_leDate->text().toStdString();
 	b.shop = m_cbShop->currentIndex();
-	b.price = std::stof(m_lePrice->text().toStdString());
-
 	b.category = m_cbCategory->currentIndex();
 	b.subCategory = m_cbCategorySub->currentIndex();
+
+	// Convert price to float
+	b.price = 0.0f;
+	std::string price = m_lePrice->text().toStdString();
+	for(auto& c :price) {
+		if(c == ',')
+			c = '.';
+	}
+	// Input mask always used ',', we want a conversion using a fixed locale.
+	std::stringstream stream(price);
+	stream.imbue(std::locale::classic());
+	stream >> b.price;
 
 	lib::addBillToFile(b);
 

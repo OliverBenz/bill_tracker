@@ -18,13 +18,14 @@ set(headers
     lib/shop.hpp
     lib/category.hpp
     lib/fileHandling.hpp
+    lib/dateHandler.hpp
 )
 set(sources
     main.cpp
     inputWindow.cpp
     mainWindow.cpp
-    lib/bill.cpp
     lib/fileHandling.cpp
+    lib/dateHandler.cpp
 )
 
 # Create library

@@ -1,7 +1,8 @@
-#include "bill.hpp"
+#include "dateHandler.hpp"
 
 #include <chrono>
 #include <sstream>
+#include <iomanip>
 
 namespace lib {
 
@@ -13,6 +14,16 @@ std::string todaysDate()
 	std::stringstream ss;
 	ss << std::put_time(std::localtime(&in_time_t), "%d.%m.%Y");
 	return ss.str();
+}
+
+bool dateIsValid(const std::string& date) {
+	// TODO: Implement
+	for(const auto& c : date) {
+		// Placeholder because "date" cannot be unused.
+		if(c == 'a')
+			return false;
+	}
+	return true;
 }
 
 }

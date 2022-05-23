@@ -14,6 +14,8 @@ set(targetName "billTracker")
 set(headers
     inputWindow.hpp
     mainWindow.hpp
+    toolBar.hpp
+    settingsWindow.hpp
     lib/bill.hpp
     lib/shop.hpp
     lib/category.hpp
@@ -24,6 +26,8 @@ set(sources
     main.cpp
     inputWindow.cpp
     mainWindow.cpp
+    toolBar.cpp
+    settingsWindow.cpp
     lib/fileHandling.cpp
     lib/dateHandler.cpp
 )

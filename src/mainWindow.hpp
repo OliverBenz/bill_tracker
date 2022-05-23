@@ -1,10 +1,10 @@
 #pragma once
 
 #include <QWidget>
-#include <QMenu>
 #include <QVBoxLayout>
 
 #include "inputWindow.hpp"
+#include "toolBar.hpp"
 
 class mainWindow : public QWidget {
 	Q_OBJECT
@@ -15,7 +15,7 @@ public:
 
 private:
 	QVBoxLayout* m_lMain;
-	QMenu* m_menu;
 
+	toolBar* m_menuBar;
 	inputWindow* m_inputWindow;
 };

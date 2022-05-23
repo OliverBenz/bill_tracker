@@ -14,6 +14,7 @@ namespace lib {
 
 constexpr char filenameGlobal[] = "data/global.json";
 constexpr char filenameData[] = "data/data.json";
+constexpr char filenameConfig[] = "data/config.json";  // TODO: Have this at special place - Other paths defined in here
 
 bool addBillToFile(const bill& newBill) {
 	std::ifstream input(filenameData);
@@ -87,6 +88,40 @@ std::vector<subcategory> getSubCategories(int categoryId) {
 	}
 
 	return subcats;
+}
+
+std::string getAppAuthor() {
+	std::ifstream jsonFile(filenameConfig);
+	nlohmann::json json = nlohmann::json::parse(jsonFile);
+
+	constexpr char app[] = "application";
+	constexpr char author[] = "author";
+
+	if(json.find(app) == json.end())
+		return "";
+
+	nlohmann::json jsonApp = json.at(app);
+	if(jsonApp.find(author) == jsonApp.end())
+		return "";
+
+	return jsonApp.at(author);
+}
+
+std::string getAppName() {
+	std::ifstream jsonFile(filenameConfig);
+	nlohmann::json json = nlohmann::json::parse(jsonFile);
+
+	constexpr char app[] = "application";
+	constexpr char name[] = "name";
+
+	if(json.find(app) == json.end())
+		return "";
+
+	nlohmann::json jsonApp = json.at(app);
+	if(jsonApp.find(name) == jsonApp.end())
+		return "";
+
+	return jsonApp.at(name);
 }
 
 }

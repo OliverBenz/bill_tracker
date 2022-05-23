@@ -16,18 +16,21 @@ set(headers
     mainWindow.hpp
     toolBar.hpp
     settingsWindow.hpp
+    aboutDialog.hpp
     lib/bill.hpp
     lib/shop.hpp
     lib/category.hpp
     lib/fileHandling.hpp
     lib/dateHandler.hpp
 )
+
 set(sources
     main.cpp
     inputWindow.cpp
     mainWindow.cpp
     toolBar.cpp
     settingsWindow.cpp
+    aboutDialog.cpp
     lib/fileHandling.cpp
     lib/dateHandler.cpp
 )

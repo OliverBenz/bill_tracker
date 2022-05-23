@@ -1,6 +1,6 @@
 #include "toolBar.hpp"
 
-#include "settingsWindow.hpp"
+#include "aboutDialog.hpp"
 
 toolBar::toolBar(QWidget* parent) : QMenuBar(parent) {
 	createActions();
@@ -49,7 +49,8 @@ void toolBar::settings() {
 }
 
 void toolBar::about() {
-
+	aboutDialog about;
+	about.exec();
 }
 
 toolBar::~toolBar() {

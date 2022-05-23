@@ -16,4 +16,7 @@ std::vector<shop> getShops();
 std::vector<category> getCategories();
 std::vector<subcategory> getSubCategories(int categoryId);
 
+// Application data
+std::string getAppAuthor();
+std::string getAppName();
 }

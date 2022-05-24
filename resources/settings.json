@@ -1,0 +1,8 @@
+{
+	"application": {
+		"name": "Bill Tracker",
+		"author": "Oliver Benz"
+	},
+	"pathBills": "/home/oliver/.billtracker/data",
+	"pathData": "/home/oliver/.billtracker/data"
+}

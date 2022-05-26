@@ -214,7 +214,7 @@ bool setFolderPath(const file fileName, const std::string& path) {
 }
 
 bool updateFilePath(file fileName, const std::string& newPath) {
-	const std::string oldPath = getFolderPath(file::bills);
+	const std::string oldPath = getFolderPath(fileName);
 	if(newPath == oldPath)
 		return true;
 

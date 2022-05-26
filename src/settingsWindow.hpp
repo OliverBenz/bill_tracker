@@ -17,13 +17,14 @@ private slots:
 	//! Get and display data from settings file.
 	void fillStandardData();
 	void openFileExplorerBills();
+	void openFileExplorerData();
 
 	void save();
 	void cancel();
 
 private:
 	//! Set the new folder path in settings file.
-	void updateBillsPath();
+	void updatePaths();
 
 private:
 	QVBoxLayout* m_lMain;
@@ -32,6 +33,11 @@ private:
 	QLabel* m_laPathBill;
 	QLineEdit* m_lePathBill;
 	QPushButton* m_bPathBill;
+
+	QHBoxLayout* m_lPathData;
+	QLabel* m_laPathData;
+	QLineEdit* m_lePathData;
+	QPushButton* m_bPathData;
 
 	QHBoxLayout* m_lExitButtons;
 	QPushButton* m_bSave;

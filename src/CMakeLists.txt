@@ -1,5 +1,6 @@
 # ----- External Libraries -----
 find_package(Qt6 REQUIRED COMPONENTS Gui Widgets)
+find_package(fmt)
 include(ExternalLibs.cmake)
 
 set(CMAKE_AUTOMOC ON) # Qt6 Settings
@@ -44,7 +45,7 @@ add_executable(${targetName}
 
 
 # Link to thread module for maths functions.
-target_link_libraries(${targetName} PRIVATE Qt6::Gui Qt6::Widgets nlohmann_json::nlohmann_json)
+target_link_libraries(${targetName} PRIVATE Qt6::Gui Qt6::Widgets nlohmann_json::nlohmann_json fmt::fmt)
 set_target_properties(${targetName} PROPERTIES FOLDER "${ideFolderSource}")
 
 # Setup project settings

@@ -21,6 +21,7 @@ private:
 private slots:
 	void importBills();
 	void exportBills();
+	void createBackup();
 	void settings();
 	void about();
 
@@ -28,6 +29,7 @@ private:
 	QMenu* m_file;
 	QAction* m_import;
 	QAction* m_export;
+	QAction* m_backup;
 	QAction* m_settings;
 
 	QMenu* m_help;

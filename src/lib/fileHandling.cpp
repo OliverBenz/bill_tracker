@@ -1,10 +1,11 @@
 #include "fileHandling.hpp"
 #include "dateHandler.hpp"
 
-#include <set>
 #include <sstream>
 #include <fstream>
 #include <iostream>
+
+#include <fmt/format.h>
 
 namespace lib {
 
@@ -15,6 +16,7 @@ namespace lib {
 
 // Settings will always be here
 // TODO: Make path with cmake and setup standard files
+constexpr char PROJECT_PATH[] = "/home/oliver/.billtracker";
 constexpr char filenameConfig[] = "/home/oliver/.billtracker/data/settings.json";
 
 bool addBillToFile(const bill& newBill) {
@@ -240,6 +242,47 @@ bool updateFilePath(file fileName, const std::string& newPath) {
 
 	// TODO: File already moved but path not updated!
 	return false;
+}
+
+bool createBackup() {
+	const std::string fileSettings = getFilePath(file::settings);
+	std::ifstream input(fileSettings);
+	nlohmann::json json = nlohmann::json::parse(input);
+
+	if(json.find("pathBills") == json.end() || json.find("pathData") == json.end())
+		return false;
+
+	const std::string fileBills = json.at("pathBills");
+	const std::string fileData = json.at("pathData");
+
+	const std::string backupDir = std::string(PROJECT_PATH) + "/backup";
+	if(!std::filesystem::exists(backupDir)){
+		std::filesystem::create_directory(backupDir);
+	}
+
+	// Create backup directory name
+	std::string dirName = fmt::format("{}/[{}]backup", backupDir, todaysDate());
+	if(std::filesystem::exists(dirName)) {
+		std::size_t backupTracker = 1;
+		while(std::filesystem::exists(fmt::format("{}({})", dirName, backupTracker))) {
+			++backupTracker;
+		}
+		dirName += "(" + std::to_string(backupTracker) + ")";
+	}
+
+	std::filesystem::create_directory(dirName);
+
+	try {
+		std::filesystem::copy(getFilePath(file::data), dirName + "/" + getFileName(file::data));
+		std::filesystem::copy(getFilePath(file::bills), dirName + "/" + getFileName(file::bills));
+		std::filesystem::copy(getFilePath(file::settings), dirName + "/" + getFileName(file::settings));
+	} catch (std::filesystem::filesystem_error& e) {
+		std::filesystem::remove_all(dirName);  // Cleanup
+		std::cerr << "Error: Could not create backup.\n" << e.what();
+		return false;
+	}
+
+	return true;
 }
 
 }

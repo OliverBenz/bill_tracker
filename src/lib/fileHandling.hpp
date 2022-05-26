@@ -47,4 +47,8 @@ bool setFolderPath(file fileName, const std::string& path);
  */
 bool updateFilePath(file fileName, const std::string& newPath);
 
+
+// Backup
+bool createBackup();
+
 }

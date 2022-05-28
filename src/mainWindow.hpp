@@ -2,8 +2,10 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
+#include <QTableView>
 
-#include "inputWindow.hpp"
+#include "addBillWidget.hpp"
+#include "billTable.hpp"
 #include "toolBar.hpp"
 
 class mainWindow : public QWidget {
@@ -17,5 +19,7 @@ private:
 	QVBoxLayout* m_lMain;
 
 	toolBar* m_menuBar;
-	inputWindow* m_inputWindow;
+	addBillWidget* m_addBillWidget;
+	QTableView* m_tableView;
+	billTable* m_billTable;
 };

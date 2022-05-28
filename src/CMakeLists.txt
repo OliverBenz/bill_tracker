@@ -12,28 +12,35 @@ set(CMAKE_AUTOUIC ON) # Qt6 Settings
 set(targetName "billTracker")
 
 # Get files to build
+include(views)
 set(headers
-    inputWindow.hpp
+    addBillWidget.hpp
     mainWindow.hpp
     toolBar.hpp
     settingsWindow.hpp
     aboutDialog.hpp
+    billTable.hpp
     lib/bill.hpp
     lib/shop.hpp
     lib/category.hpp
     lib/fileHandling.hpp
     lib/dateHandler.hpp
+
+    ${view_headers}
 )
 
 set(sources
     main.cpp
-    inputWindow.cpp
+    addBillWidget.cpp
     mainWindow.cpp
     toolBar.cpp
     settingsWindow.cpp
     aboutDialog.cpp
+    billTable.cpp
     lib/fileHandling.cpp
     lib/dateHandler.cpp
+
+    ${view_sources}
 )
 
 # Create library

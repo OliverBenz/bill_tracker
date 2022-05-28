@@ -7,12 +7,12 @@
 #include <QHBoxLayout>
 #include <QComboBox>
 
-class inputWindow : public QWidget {
+class addBillWidget : public QWidget {
 	Q_OBJECT
 
 public:
-	inputWindow(QWidget* parent = nullptr);
-	~inputWindow();
+	addBillWidget(QWidget* parent = nullptr);
+	~addBillWidget();
 
 private:
 	void setupInputMasks();

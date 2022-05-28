@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "inputWindow.hpp"
+#include "addBillWidget.hpp"
 //#include "displayWindow.hpp"
 #include "mainWindow.hpp"
 

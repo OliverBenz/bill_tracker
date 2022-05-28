@@ -1,4 +1,4 @@
-#include "inputWindow.hpp"
+#include "addBillWidget.hpp"
 
 #include "lib/bill.hpp"
 #include "lib/shop.hpp"
@@ -9,7 +9,7 @@
 #include <sstream>
 #include <locale>
 
-inputWindow::inputWindow(QWidget* parent) : QWidget(parent) {
+addBillWidget::addBillWidget(QWidget* parent) : QWidget(parent) {
 	// Create widgets
 	m_lMain = new QVBoxLayout(this);
 	m_lInputs = new QHBoxLayout();
@@ -43,7 +43,7 @@ inputWindow::inputWindow(QWidget* parent) : QWidget(parent) {
 	fillStandardData();
 }
 
-void inputWindow::setupInputMasks() {
+void addBillWidget::setupInputMasks() {
 	m_leDate->setPlaceholderText("DD.MM.YYYY");
 	m_leDate->setInputMask("99.99.9999");
 
@@ -51,13 +51,13 @@ void inputWindow::setupInputMasks() {
 	m_lePrice->setInputMask("99,99€");
 }
 
-void inputWindow::setupConnections() {
+void addBillWidget::setupConnections() {
 	connect(m_bAdd, SIGNAL(clicked()), this, SLOT(writeBillToFile()));
 	connect(m_bClear, SIGNAL(clicked()), this, SLOT(clearInputFields()));
 	connect(m_cbCategory, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSubCategories(int)));
 }
 
-void inputWindow::fillStandardData() {
+void addBillWidget::fillStandardData() {
 	auto shops = lib::getShops();
 	for (const auto& shop : shops)
 		m_cbShop->insertItem(shop.id, QString(shop.name.c_str()));
@@ -67,7 +67,7 @@ void inputWindow::fillStandardData() {
 		m_cbCategory->insertItem(category.id, QString(category.name.c_str()));
 }
 
-inputWindow::~inputWindow() {
+addBillWidget::~addBillWidget() {
 	delete m_bClear;
 	delete m_bAdd;
 
@@ -84,13 +84,13 @@ inputWindow::~inputWindow() {
 
 // Slots
 // -----
-void inputWindow::clearInputFields() {
+void addBillWidget::clearInputFields() {
 	m_lePrice->clear();
 	m_leDate->clear();
 	m_cbShop->setCurrentIndex(0);
 }
 
-void inputWindow::writeBillToFile() {
+void addBillWidget::writeBillToFile() {
 	if(!lib::dateIsValid(m_leDate->text().toStdString())) {
 		return; // TODO: With a message maybe.
 	}
@@ -118,7 +118,7 @@ void inputWindow::writeBillToFile() {
 	clearInputFields();
 }
 
-void inputWindow::updateSubCategories(const int newCategory) {
+void addBillWidget::updateSubCategories(const int newCategory) {
 	const auto subcats = lib::getSubCategories(newCategory);
 	m_cbCategorySub->clear();
 

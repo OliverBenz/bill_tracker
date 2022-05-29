@@ -1,8 +1,8 @@
 #pragma once
 
-#include "lib/bill.hpp"
-#include "lib/shop.hpp"
-#include "lib/category.hpp"
+#include "../lib/bill.hpp"
+#include "../lib/shop.hpp"
+#include "../lib/category.hpp"
 
 #include <QAbstractTableModel>
 

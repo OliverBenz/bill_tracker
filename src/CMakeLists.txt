@@ -1,7 +1,11 @@
+# ----- Components -----
+add_subdirectory(lib)
+include(tools/Files.cmake)
+include(views/Files.cmake)
+
 # ----- External Libraries -----
 find_package(Qt6 REQUIRED COMPONENTS Gui Widgets)
 find_package(fmt)
-include(ExternalLibs.cmake)
 
 set(CMAKE_AUTOMOC ON) # Qt6 Settings
 set(CMAKE_AUTORCC ON) # Qt6 Settings
@@ -12,47 +16,29 @@ set(CMAKE_AUTOUIC ON) # Qt6 Settings
 set(targetName "billTracker")
 
 # Get files to build
-include(views)
 set(headers
     addBillWidget.hpp
     mainWindow.hpp
-    toolBar.hpp
-    settingsWindow.hpp
-    aboutDialog.hpp
-    billTable.hpp
-    lib/bill.hpp
-    lib/shop.hpp
-    lib/category.hpp
-    lib/fileHandling.hpp
-    lib/dateHandler.hpp
 
-    ${view_headers}
+    ${toolHeaders}
+    ${viewHeaders}
 )
 
 set(sources
     main.cpp
     addBillWidget.cpp
     mainWindow.cpp
-    toolBar.cpp
-    settingsWindow.cpp
-    aboutDialog.cpp
-    billTable.cpp
-    lib/fileHandling.cpp
-    lib/dateHandler.cpp
 
-    ${view_sources}
+    ${toolSources}
+    ${viewSources}
 )
 
 # Create library
-add_executable(${targetName}
-    # Common modules
-    ${headers}
-    ${sources}
-)
+add_executable(${targetName} ${headers} ${sources})
 
 
 # Link to thread module for maths functions.
-target_link_libraries(${targetName} PRIVATE Qt6::Gui Qt6::Widgets nlohmann_json::nlohmann_json fmt::fmt)
+target_link_libraries(${targetName} PRIVATE billTrackerLib Qt6::Gui Qt6::Widgets fmt::fmt)
 set_target_properties(${targetName} PROPERTIES FOLDER "${ideFolderSource}")
 
 # Setup project settings

@@ -1,7 +1,7 @@
 #include "toolBar.hpp"
 
 #include "aboutDialog.hpp"
-#include "lib/fileHandling.hpp"
+#include "../lib/fileHandling.hpp"
 
 toolBar::toolBar(QWidget* parent) : QMenuBar(parent) {
 	createActions();

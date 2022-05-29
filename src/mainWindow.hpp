@@ -5,8 +5,8 @@
 #include <QTableView>
 
 #include "addBillWidget.hpp"
-#include "billTable.hpp"
-#include "toolBar.hpp"
+#include "views/billTable.hpp"
+#include "tools/toolBar.hpp"
 
 class mainWindow : public QWidget {
 	Q_OBJECT

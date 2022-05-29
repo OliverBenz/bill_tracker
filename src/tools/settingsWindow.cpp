@@ -1,6 +1,6 @@
 #include "settingsWindow.hpp"
 
-#include "lib/fileHandling.hpp"
+#include "../lib/fileHandling.hpp"
 
 #include <QFileDialog>
 #include <filesystem>

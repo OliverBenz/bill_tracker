@@ -1,6 +1,6 @@
 #include "billTable.hpp"
 
-#include "lib/fileHandling.hpp"
+#include "../lib/fileHandling.hpp"
 
 #include <fmt/core.h>
 billTable::billTable() {

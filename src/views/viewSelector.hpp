@@ -2,8 +2,10 @@
 
 #include <QWidget>
 #include <QTabWidget>
+#include <QTableView>
 
 #include "billTable.hpp"
+#include "overview.hpp"
 
 class viewSelector : public QTabWidget {
 	Q_OBJECT
@@ -16,11 +18,9 @@ private slots:
 	void updateTab(int id);
 
 private:
-	// Tabs
-	QWidget* m_selOverview;  // Contains statistics on bills
-	QWidget* m_selList;      // Contains a table of bills
-
 	// Pages
+	QTableView* m_tableView;
 	billTable* m_billTable;
+	overview* m_overview;
 
 };

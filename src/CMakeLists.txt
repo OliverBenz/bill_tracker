@@ -4,7 +4,7 @@ include(tools/Files.cmake)
 include(views/Files.cmake)
 
 # ----- External Libraries -----
-find_package(Qt6 REQUIRED COMPONENTS Gui Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Gui Widgets Charts)
 find_package(fmt)
 
 set(CMAKE_AUTOMOC ON) # Qt6 Settings
@@ -38,7 +38,7 @@ add_executable(${targetName} ${headers} ${sources})
 
 
 # Link to thread module for maths functions.
-target_link_libraries(${targetName} PRIVATE billTrackerLib Qt6::Gui Qt6::Widgets fmt::fmt)
+target_link_libraries(${targetName} PRIVATE billTrackerLib Qt6::Gui Qt6::Widgets Qt6::Charts fmt::fmt)
 set_target_properties(${targetName} PROPERTIES FOLDER "${ideFolderSource}")
 
 # Setup project settings

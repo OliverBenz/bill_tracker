@@ -8,7 +8,9 @@ int main(int argc, char** argv) {
 	lib::initializeProgram();
 
 	QApplication application(argc, argv);
-	mainWindow widget;
+
+	//mainWindow widget;
+	viewSelector widget;
 	widget.show();
 
 	return application.exec();

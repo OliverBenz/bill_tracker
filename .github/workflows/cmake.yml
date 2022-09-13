@@ -7,7 +7,7 @@ env:
 
 jobs:
   Build_And_Test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout repository
@@ -19,7 +19,7 @@ jobs:
       run: cmake -E make_directory ${{runner.workspace}}/build
 
     - name: Install Dependencies
-      run: sudo apt update; sudo apt install libgtest-dev
+      run: sudo apt update; sudo apt install libgtest-dev libfmt-dev qt6-base-dev
 
     - name: Configure CMake
       shell: bash

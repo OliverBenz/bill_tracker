@@ -1,4 +1,4 @@
-#include "fileHandling.hpp"
+#include "fileAccessHandler.hpp"
 #include "dateHandler.hpp"
 
 #include <sstream>
@@ -14,12 +14,9 @@ namespace lib {
 //       IF wish for fix is there: We could make a separate file for every month like:
 //       	"2022-05_data.json", "2022-06_data.json", etc
 
-// Settings will always be here
 // TODO: Make path with cmake and setup standard files
-constexpr char PROJECT_PATH[] = "/home/oliver/.billtracker";
-constexpr char filenameConfig[] = "/home/oliver/.billtracker/data/settings.json";
 
-bool addBillToFile(const bill& newBill) {
+bool fileAccessHandler::addBill(const bill& newBill) const {
 	const std::string pathBillFile = getFilePath(file::bills);
 	std::ifstream input(pathBillFile);
 
@@ -34,7 +31,7 @@ bool addBillToFile(const bill& newBill) {
 	return false;
 }
 
-std::vector<bill> getBills(const std::string& date) {
+std::vector<bill> fileAccessHandler::getBills(const std::string& date) const {
 	std::ifstream jsonFile(getFilePath(file::bills));
 	nlohmann::json json =  nlohmann::json::parse(jsonFile);
 
@@ -55,7 +52,7 @@ std::vector<bill> getBills(const std::string& date) {
 	return result;
 }
 
-std::vector<shop> getShops() {
+std::vector<shop> fileAccessHandler::getShops() const {
 	std::ifstream jsonFile(getFilePath(file::data));
 	nlohmann::json json = nlohmann::json::parse(jsonFile);
 
@@ -65,7 +62,7 @@ std::vector<shop> getShops() {
 	return shops;
 }
 
-std::vector<category> getCategories() {
+std::vector<category> fileAccessHandler::getCategories() const {
 	std::ifstream jsonFile(getFilePath(file::data));
 	nlohmann::json json = nlohmann::json::parse(jsonFile);
 
@@ -78,7 +75,7 @@ std::vector<category> getCategories() {
 	return categories;
 }
 
-std::vector<subcategory> getSubCategories(int categoryId) {
+std::vector<subcategory> fileAccessHandler::getSubCategories(int categoryId) const {
 	std::ifstream jsonFile(getFilePath(file::data));
 	nlohmann::json json = nlohmann::json::parse(jsonFile);
 
@@ -97,8 +94,8 @@ std::vector<subcategory> getSubCategories(int categoryId) {
 	return subcats;
 }
 
-std::string getAppAuthor() {
-	std::ifstream jsonFile(filenameConfig);
+std::string fileAccessHandler::getAppAuthor() const {
+	std::ifstream jsonFile(m_filenameConfig);
 	nlohmann::json json = nlohmann::json::parse(jsonFile);
 
 	constexpr char app[] = "application";
@@ -114,8 +111,8 @@ std::string getAppAuthor() {
 	return jsonApp.at(author);
 }
 
-std::string getAppName() {
-	std::ifstream jsonFile(filenameConfig);
+std::string fileAccessHandler::getAppName() const {
+	std::ifstream jsonFile(m_filenameConfig);
 	nlohmann::json json = nlohmann::json::parse(jsonFile);
 
 	constexpr char app[] = "application";
@@ -131,29 +128,17 @@ std::string getAppName() {
 	return jsonApp.at(name);
 }
 
-std::string getFileName(const file fileName) {
-	switch(fileName) {
-		case file::bills:
-			return "bills.json";
-		case file::data:
-			return "data.json";
-		case file::settings:
-			return "settings.json";
-	}
-	return "";
-}
-
-std::string getFilePath(const file fileName) {
+std::string fileAccessHandler::getFilePath(const file fileName) const {
 	if(fileName == file::settings)
-		return std::string(filenameConfig);
+		return std::string(m_filenameConfig);
 
 	return getFolderPath(fileName) + "/" + getFileName(fileName);
 }
 
-std::string getFolderPath(const file fileName) {
+std::string fileAccessHandler::getFolderPath(const file fileName) const {
 	// Config file always at same position
 	if (fileName == file::settings){
-		std::string path = std::string(filenameConfig);
+		std::string path = std::string(m_filenameConfig);
 		path.resize(path.rfind('/') - 1);
 		return path;
 	}
@@ -171,7 +156,7 @@ std::string getFolderPath(const file fileName) {
 	}
 
 	// Read filepath from config file
-	std::ifstream jsonFile(filenameConfig);
+	std::ifstream jsonFile(m_filenameConfig);
 	nlohmann::json json = nlohmann::json::parse(jsonFile);
 
 	if (json.find(jsonElemName) == json.end())
@@ -180,7 +165,7 @@ std::string getFolderPath(const file fileName) {
 	return json.at(jsonElemName);
 }
 
-bool setFolderPath(const file fileName, const std::string& path) {
+bool fileAccessHandler::setFolderPath(const file fileName, const std::string& path) const {
 	if(fileName == file::settings)
 		return false;
 
@@ -213,7 +198,7 @@ bool setFolderPath(const file fileName, const std::string& path) {
 	return false;
 }
 
-bool updateFilePath(file fileName, const std::string& newPath) {
+bool fileAccessHandler::updateFilePath(file fileName, const std::string& newPath) const {
 	const std::string oldPath = getFolderPath(fileName);
 	if(newPath == oldPath)
 		return true;
@@ -244,7 +229,7 @@ bool updateFilePath(file fileName, const std::string& newPath) {
 	return false;
 }
 
-bool createBackup() {
+bool fileAccessHandler::createBackup() const {
 	const std::string fileSettings = getFilePath(file::settings);
 	std::ifstream input(fileSettings);
 	nlohmann::json json = nlohmann::json::parse(input);
@@ -255,7 +240,7 @@ bool createBackup() {
 	const std::string fileBills = json.at("pathBills");
 	const std::string fileData = json.at("pathData");
 
-	const std::string backupDir = std::string(PROJECT_PATH) + "/backup";
+	const std::string backupDir = std::string(m_projectPath) + "/backup";
 	if(!std::filesystem::exists(backupDir)){
 		std::filesystem::create_directory(backupDir);
 	}
@@ -283,6 +268,18 @@ bool createBackup() {
 	}
 
 	return true;
+}
+
+std::string fileAccessHandler::getFileName(const file fileName) {
+	switch(fileName) {
+		case file::bills:
+			return "bills.json";
+		case file::data:
+			return "data.json";
+		case file::settings:
+			return "settings.json";
+	}
+	return "";
 }
 
 }

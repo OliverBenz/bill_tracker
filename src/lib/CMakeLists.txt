@@ -4,8 +4,8 @@ include(ExternalLibs.cmake)
 set(libTargetName billTrackerLib)
 
 # Sources
-set(libHeaders bill.hpp shop.hpp dateHandler.hpp fileHandling.hpp)
-set(libSources dateHandler.cpp fileHandling.cpp)
+set(libHeaders bill.hpp shop.hpp file.hpp dateHandler.hpp dataHandler.hpp IDataAccessHandler.hpp fileAccessHandler.hpp)
+set(libSources dateHandler.cpp dataHandler.cpp IDataAccessHandler.cpp fileAccessHandler.cpp)
 
 add_library(${libTargetName} STATIC ${libHeaders} ${libSources})
 

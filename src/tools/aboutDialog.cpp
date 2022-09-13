@@ -1,6 +1,6 @@
 #include "aboutDialog.hpp"
 
-#include "../lib/fileHandling.hpp"
+#include "../lib/dataHandler.hpp"
 
 aboutDialog::aboutDialog(QWidget* parent) : QDialog(parent) {
 	m_lMain = new QVBoxLayout(this);

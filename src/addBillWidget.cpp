@@ -3,7 +3,7 @@
 #include "lib/bill.hpp"
 #include "lib/shop.hpp"
 #include "lib/category.hpp"
-#include "lib/fileHandling.hpp"
+#include "lib/dataHandler.hpp"
 #include "lib/dateHandler.hpp"
 
 #include <sstream>
@@ -113,7 +113,7 @@ void addBillWidget::writeBillToFile() {
 	stream.imbue(std::locale::classic());
 	stream >> b.price;
 
-	lib::addBillToFile(b);
+	lib::addBill(b);
 
 	clearInputFields();
 }

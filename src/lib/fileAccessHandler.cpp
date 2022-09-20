@@ -94,6 +94,25 @@ std::vector<subcategory> fileAccessHandler::getSubCategories(int categoryId) con
 	return subcats;
 }
 
+void fileAccessHandler::initializeProgram() const {
+	if(std::filesystem::exists(m_filenameConfig)) {
+		return;
+	}
+
+	// Copy settings.json file.
+	const std::string settingsPath = getFolderPath(file::settings);
+	std::filesystem::create_directories(settingsPath);
+	std::filesystem::copy_file(RESOURCE_PATH_SETTINGS, settingsPath + "/settings.json");
+
+	const auto initEmptyJsonFile = [&](const file fileType) {
+		std::ofstream file(getFilePath(fileType));
+		file << "{}\n";
+		file.close();
+	};
+	initEmptyJsonFile(file::bills);
+	initEmptyJsonFile(file::data);
+}
+
 std::string fileAccessHandler::getAppAuthor() const {
 	std::ifstream jsonFile(m_filenameConfig);
 	nlohmann::json json = nlohmann::json::parse(jsonFile);
@@ -130,7 +149,7 @@ std::string fileAccessHandler::getAppName() const {
 
 std::string fileAccessHandler::getFilePath(const file fileName) const {
 	if(fileName == file::settings)
-		return std::string(m_filenameConfig);
+		return {m_filenameConfig};
 
 	return getFolderPath(fileName) + "/" + getFileName(fileName);
 }
@@ -139,7 +158,7 @@ std::string fileAccessHandler::getFolderPath(const file fileName) const {
 	// Config file always at same position
 	if (fileName == file::settings){
 		std::string path = std::string(m_filenameConfig);
-		path.resize(path.rfind('/') - 1);
+		path.resize(path.rfind('/'));
 		return path;
 	}
 

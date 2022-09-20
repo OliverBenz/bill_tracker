@@ -21,6 +21,9 @@ public:
 	bool createBackup() const override;
 
 // Application data
+	//! Setup all required infrastructure for the program if necessary.
+	void initializeProgram() const override;
+
 	//! Get the application author name from the config file.
 	std::string getAppAuthor() const override;
 

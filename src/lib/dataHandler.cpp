@@ -11,6 +11,11 @@ static std::unique_ptr<IDataAccessHandler> getAccessHandler() {
 	return std::make_unique<fileAccessHandler>();
 }
 
+void initializeProgram() {
+	const auto accessHandler = getAccessHandler();
+	accessHandler->initializeProgram();
+}
+
 bool addBill(const bill& newBill) {
 	const auto accessHandler = getAccessHandler();
 	return accessHandler->addBill(newBill);

@@ -35,6 +35,9 @@ public:
 	virtual bool createBackup() const = 0;
 
 // Application data
+	//! Setup all required infrastructure for the program if necessary.
+	virtual void initializeProgram() const = 0;
+
 	//! Get the application author name from the config file.
 	virtual std::string getAppAuthor() const = 0;
 

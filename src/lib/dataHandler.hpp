@@ -9,19 +9,27 @@
 
 namespace lib {
 
+//! Add a new bill to the system.
 bool addBill(const bill& newBill);
 
+//! Get a list of bills from a specific date. All bills if date is empty.
 std::vector<bill> getBills(const std::string& date);
-std::vector<shop> getShops();
 
+//! Get a list of all shops.
+std::vector<shop> getShops();
+//! Get a list of all categories.
 std::vector<category> getCategories();
+//! Get a list of all subcategories of a specific category.
 std::vector<subcategory> getSubCategories(int categoryId);
 
-// Config data
+// ----- Application data -----
+//! Setup all required infrastructure for the program if necessary.
+void initializeProgram();
+
 //! Get the application author name from the config file.
 std::string getAppAuthor();
 
-//! Ge the application name from the config file.
+//! Get the application name from the config file.
 std::string getAppName();
 
 //! Get path where file is stored from the settings.json file (with fileName).

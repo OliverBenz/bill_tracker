@@ -5,12 +5,13 @@
 #include <QChartView>
 #include <QPieSeries>
 
-class overview : public QWidget {
+//! Display statistics made from available data.
+class statisticsView : public QWidget {
 	Q_OBJECT
 
 public:
-	overview(QWidget* parent = nullptr);
-	~overview();
+	statisticsView(QWidget* parent = nullptr);
+	~statisticsView();
 
 private:
 	void setupCategoryPieChart();

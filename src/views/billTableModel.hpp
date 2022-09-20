@@ -13,11 +13,11 @@
 // TODO: Editable models need to implement setData(), and implement flags() to return a value containing Qt::ItemIsEditable.
 // 		 See docs for more info
 
-class billTable : public QAbstractTableModel {
+class billTableModel : public QAbstractTableModel {
 	Q_OBJECT
 
 public:
-	billTable();
+	billTableModel();
 
 	int rowCount(const QModelIndex& parent = QModelIndex()) const;
 	int columnCount(const QModelIndex& parent = QModelIndex()) const;

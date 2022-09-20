@@ -4,15 +4,15 @@
 #include <QTabWidget>
 #include <QTableView>
 
-#include "billTable.hpp"
-#include "overview.hpp"
+#include "statisticsView.hpp"
+#include "billManager.hpp"
 
-class viewSelector : public QTabWidget {
+class ViewSelector : public QTabWidget {
 	Q_OBJECT
 
 public:
-	viewSelector(QWidget* parent = nullptr);
-	~viewSelector();
+	ViewSelector(QWidget* parent = nullptr);
+	~ViewSelector();
 
 private slots:
 	void updateTab(int id);
@@ -20,7 +20,6 @@ private slots:
 private:
 	// Pages
 	QTableView* m_tableView;
-	billTable* m_billTable;
-	overview* m_overview;
-
+	statisticsView* m_overview;
+	BillManager* m_billManager;
 };

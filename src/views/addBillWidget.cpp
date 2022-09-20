@@ -1,10 +1,10 @@
 #include "addBillWidget.hpp"
 
-#include "lib/bill.hpp"
-#include "lib/shop.hpp"
-#include "lib/category.hpp"
-#include "lib/dataHandler.hpp"
-#include "lib/dateHandler.hpp"
+#include "../lib/bill.hpp"
+#include "../lib/shop.hpp"
+#include "../lib/category.hpp"
+#include "../lib/dataHandler.hpp"
+#include "../lib/dateHandler.hpp"
 
 #include <sstream>
 #include <locale>

@@ -1,9 +1,9 @@
-#include "billTable.hpp"
+#include "billTableModel.hpp"
 
 #include "../lib/dataHandler.hpp"
 
 #include <fmt/core.h>
-billTable::billTable() {
+billTableModel::billTableModel() {
 	beginInsertColumns(QModelIndex(), 0, 5);
 	insertColumns(0, 5);
 	endInsertColumns();
@@ -11,7 +11,7 @@ billTable::billTable() {
 	getAllData();
 }
 
-void billTable::getAllData() {
+void billTableModel::getAllData() {
 	m_data = lib::getBills("");
 
 	// Get shops
@@ -32,14 +32,14 @@ void billTable::getAllData() {
 	}
 }
 
-int billTable::rowCount(const QModelIndex& parent) const {
+int billTableModel::rowCount(const QModelIndex& parent) const {
 	if(parent.isValid())
 		return 0;
 
 	return static_cast<int>(m_data.size());
 }
 
-int billTable::columnCount(const QModelIndex& parent) const {
+int billTableModel::columnCount(const QModelIndex& parent) const {
 	if(parent.isValid())
 		return 0;
 
@@ -47,7 +47,7 @@ int billTable::columnCount(const QModelIndex& parent) const {
 	return 5;
 }
 
-QVariant billTable::data(const QModelIndex& index, int role) const {
+QVariant billTableModel::data(const QModelIndex& index, int role) const {
 	if(role != Qt::DisplayRole)
 		return QVariant::Invalid;
 
@@ -67,7 +67,7 @@ QVariant billTable::data(const QModelIndex& index, int role) const {
 			return QVariant::Invalid;
 	}
 }
-QVariant billTable::headerData(int section, Qt::Orientation orientation, int role) const {
+QVariant billTableModel::headerData(int section, Qt::Orientation orientation, int role) const {
 	const std::array<std::string, 5> headers = {"Date", "Shop", "Price", "Category", "Subcategory"};
 
 	if(orientation == Qt::Horizontal) {
@@ -81,7 +81,7 @@ QVariant billTable::headerData(int section, Qt::Orientation orientation, int rol
 	return QVariant::Invalid;
 }
 
-bool billTable::insert(const lib::bill& newBill) {
+bool billTableModel::insert(const lib::bill& newBill) {
 	// beginInsertRows();
 
 	m_data.push_back(newBill);

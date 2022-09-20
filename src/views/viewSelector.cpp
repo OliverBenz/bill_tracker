@@ -1,17 +1,22 @@
 #include "viewSelector.hpp"
+#include "billTableModel.hpp"
 
-viewSelector::viewSelector(QWidget* parent) : QTabWidget(parent) {
+ViewSelector::ViewSelector(QWidget* parent) : QTabWidget(parent) {
+	m_billManager = new BillManager();
+
+	m_overview = new statisticsView();
+
 	m_tableView = new QTableView();
-	m_billTable = new billTable();
-	m_tableView->setModel(m_billTable);
+	m_tableView->setModel(new billTableModel());
 	m_tableView->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
-	m_overview = new overview();
 
+
+	addTab(m_billManager, "Home");
 	addTab(m_overview, "Overview");
 	addTab(m_tableView, "List View");
 }
 
-void viewSelector::updateTab(int id) {
+void ViewSelector::updateTab(int id) {
 	if(id) {
 
 	}
@@ -19,8 +24,8 @@ void viewSelector::updateTab(int id) {
 }
 
 
-viewSelector::~viewSelector() {
+ViewSelector::~ViewSelector() {
 	delete m_overview;
-
-	delete m_billTable;
+	delete m_tableView;
+	delete m_billManager;
 }

@@ -1,8 +1,8 @@
-#include "overview.hpp"
+#include "statisticsView.hpp"
 
 #include "../lib/dataHandler.hpp"
 
-overview::overview(QWidget* parent) : QWidget(parent) {
+statisticsView::statisticsView(QWidget* parent) : QWidget(parent) {
 	m_catPie = new QPieSeries();
 	m_chart = new QChart();
 	m_chartView = new QChartView(m_chart, this);
@@ -11,7 +11,7 @@ overview::overview(QWidget* parent) : QWidget(parent) {
 	setupCategoryPieChart();
 }
 
-void overview::setupCategoryPieChart() {
+void statisticsView::setupCategoryPieChart() {
 	// Get a map of all categories with the sum of their price from all bills.
 	std::map<int, float> catPrices;
 	for(const auto& bill : lib::getBills("")) {
@@ -28,7 +28,7 @@ void overview::setupCategoryPieChart() {
 	}
 }
 
-overview::~overview() {
+statisticsView::~statisticsView() {
 	for (const auto& slice : m_catSlices) {
 		delete slice;
 	}

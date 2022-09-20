@@ -16,7 +16,6 @@ set(targetName "billTracker")
 
 # Get files to build
 set(headers
-    addBillWidget.hpp
     mainWindow.hpp
 
     ${toolHeaders}
@@ -25,7 +24,6 @@ set(headers
 
 set(sources
     main.cpp
-    addBillWidget.cpp
     mainWindow.cpp
 
     ${toolSources}

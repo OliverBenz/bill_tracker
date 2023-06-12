@@ -5,7 +5,6 @@ include(views/Files.cmake)
 
 # ----- External Libraries -----
 find_package(Qt6 REQUIRED COMPONENTS Gui Widgets Charts)
-find_package(fmt)
 
 set(CMAKE_AUTOMOC ON) # Qt6 Settings
 set(CMAKE_AUTORCC ON) # Qt6 Settings

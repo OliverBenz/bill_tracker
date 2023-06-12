@@ -1,6 +1,3 @@
-find_package(fmt)
-include(ExternalLibs.cmake)
-
 set(libTargetName billTrackerLib)
 
 # Sources

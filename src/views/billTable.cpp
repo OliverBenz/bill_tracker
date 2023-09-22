@@ -4,14 +4,35 @@
 
 #include <fmt/core.h>
 billTable::billTable() {
-	beginInsertColumns(QModelIndex(), 0, 5);
-	insertColumns(0, 5);
-	endInsertColumns();
 
-	getAllData();
+	m_model = new QStandardItemModel();
+	m_model->setColumnCount(5);
+	/*
+	m_model->setRowCount(2);
+
+	QList<QStandardItem *> items;
+	items.append(new QStandardItem("Column 1 Text"));
+	items.append(new QStandardItem("Column 2 Text"));
+	items.append(new QStandardItem("Column 2 Text"));
+	items.append(new QStandardItem("Column 2 Text"));
+	items.append(new QStandardItem("Column 2 Text"));
+
+	m_model->appendRow(items);
+*/
+	setHeader();
+}
+
+void billTable::setHeader() {
+	// Set horizontal header labels
+	QStringList headerLabels;
+	headerLabels << "Date" << "Shop" << "Price" << "Category" << "Subcategory";
+	m_model->setHorizontalHeaderLabels(headerLabels);
+
+	setModel(m_model);
 }
 
 void billTable::getAllData() {
+	/*
 	m_data = lib::getBills("");
 
 	// Get shops
@@ -30,23 +51,10 @@ void billTable::getAllData() {
 			m_subcategories.insert({{cat.id, subcat.id}, subcat.name});
 		}
 	}
+*/
 }
 
-int billTable::rowCount(const QModelIndex& parent) const {
-	if(parent.isValid())
-		return 0;
-
-	return static_cast<int>(m_data.size());
-}
-
-int billTable::columnCount(const QModelIndex& parent) const {
-	if(parent.isValid())
-		return 0;
-
-	// #{date, shop, price, category, subcategory}
-	return 5;
-}
-
+/*
 QVariant billTable::data(const QModelIndex& index, int role) const {
 	if(role != Qt::DisplayRole)
 		return QVariant::Invalid;
@@ -80,7 +88,7 @@ QVariant billTable::headerData(int section, Qt::Orientation orientation, int rol
 
 	return QVariant::Invalid;
 }
-
+*/
 bool billTable::insert(const lib::bill& newBill) {
 	// beginInsertRows();
 

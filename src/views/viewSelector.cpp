@@ -1,14 +1,12 @@
 #include "viewSelector.hpp"
 
 viewSelector::viewSelector(QWidget* parent) : QTabWidget(parent) {
-	m_tableView = new QTableView();
 	m_billTable = new billTable();
-	m_tableView->setModel(m_billTable);
-	m_tableView->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
+	m_billTable->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
 	m_overview = new overview();
 
 	addTab(m_overview, "Overview");
-	addTab(m_tableView, "List View");
+	addTab(m_billTable, "List View");
 }
 
 void viewSelector::updateTab(int id) {

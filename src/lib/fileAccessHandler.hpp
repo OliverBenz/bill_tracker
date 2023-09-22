@@ -48,6 +48,10 @@ public:
 	*/
 	bool updateFilePath(file fileName, const std::string& newPath) const override;
 
+#ifndef NDEBUG
+	void writeDebugData() const override;
+#endif
+
 private:
 	static std::string getFileName(const file fileName);
 

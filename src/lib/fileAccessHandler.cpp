@@ -307,4 +307,18 @@ std::string fileAccessHandler::getFileName(const file fileName) {
 	return "";
 }
 
+#ifndef NDEBUG
+void fileAccessHandler::writeDebugData() const {
+	subcategory subCatA{0, "Sub Test A"};
+	subcategory subCatB{1, "Sub Test B"};
+	category catA {0, "Test A", {subCatA, subCatB}};
+	shop sh{0, "Shop A"};
+
+	bill b{"25.12.1999", 0, 0, 0, 0.99f};
+	//addShop(shop);  // TODO: Implement these two
+	//addCategory{catA};
+	addBill(b);
+}
+#endif
+
 }

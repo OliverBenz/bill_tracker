@@ -32,7 +32,12 @@ bool fileAccessHandler::addBill(const bill& newBill) const {
 }
 
 std::vector<bill> fileAccessHandler::getBills(const std::string& date) const {
-	std::ifstream jsonFile(getFilePath(file::bills));
+	const std::string billsFilePath = getFilePath(file::bills);
+	if (!std::filesystem::exists(billsFilePath)) {
+		initializeProgram();
+	}
+
+	std::ifstream jsonFile(billsFilePath);
 	nlohmann::json json =  nlohmann::json::parse(jsonFile);
 
 	std::vector<bill> result;
@@ -104,13 +109,14 @@ void fileAccessHandler::initializeProgram() const {
 	std::filesystem::create_directories(settingsPath);
 	std::filesystem::copy_file(RESOURCE_PATH_SETTINGS, settingsPath + "/settings.json");
 
-	const auto initEmptyJsonFile = [&](const file fileType) {
+	// NOTE: Quick solution for convenience. When no settings file, give user chance to select directory.
+	const auto initEmptyJsonFile = [&](const file fileType, const std::string content) {
 		std::ofstream file(getFilePath(fileType));
-		file << "{}\n";
+		file << "{ " << content << "}\n";
 		file.close();
 	};
-	initEmptyJsonFile(file::bills);
-	initEmptyJsonFile(file::data);
+	initEmptyJsonFile(file::bills, "\n\t\"bills\": []\n");
+	initEmptyJsonFile(file::data, "\n\t\"shops\": [],\n\t\"categories\": []\n");
 }
 
 std::string fileAccessHandler::getAppAuthor() const {

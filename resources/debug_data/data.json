@@ -1,0 +1,28 @@
+{ 
+	"shops": [
+		{
+			"id": 0,
+			"name": "Astroshop"
+		},
+		{
+			"id": 1,
+			"name": "Particleshop"
+		}
+	],
+	"categories": [
+		{
+			"id": 0,
+			"name": "Physics Stuff",
+			"subCategories": [
+				{
+					"id": 0,
+					"name": "Astro"
+				},
+				{
+					"id": 1,
+					"name": "Particle"
+				}
+			]
+		}
+	]
+}

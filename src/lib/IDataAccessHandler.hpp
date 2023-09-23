@@ -61,6 +61,10 @@ public:
 	* @return False if an error occurred.
 	*/
 	virtual bool updateFilePath(file fileName, const std::string& newPath) const = 0;
+
+#ifndef NDEBUG
+	virtual void writeDebugData() const = 0;
+#endif
 };
 
 }

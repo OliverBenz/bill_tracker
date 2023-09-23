@@ -19,7 +19,6 @@ private slots:
 
 private:
 	// Pages
-	QTableView* m_tableView;
 	billTable* m_billTable;
 	overview* m_overview;
 

@@ -20,6 +20,5 @@ private:
 
 	toolBar* m_menuBar;
 	addBillWidget* m_addBillWidget;
-	QTableView* m_tableView;
 	billTable* m_billTable;
 };

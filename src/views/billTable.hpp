@@ -24,6 +24,7 @@ public:
 
 private:
 	void setHeader();
+	void appendBill(const lib::bill& bill);
 	void getAllData();
 
 private:

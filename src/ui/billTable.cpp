@@ -1,6 +1,6 @@
 #include "billTable.hpp"
 
-#include "../lib/dataHandler.hpp"
+#include "lib/dataHandler.hpp"
 
 billTable::billTable() {
 

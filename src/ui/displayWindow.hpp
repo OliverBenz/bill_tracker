@@ -5,7 +5,7 @@
 #include <QVBoxLayout>
 #include <QTableWidget>
 
-#include "views/billTable.hpp"
+#include "ui/billTable.hpp"
 
 class displayWindow : public QWidget {
 	Q_OBJECT

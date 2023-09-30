@@ -1,6 +1,6 @@
 #include "overview.hpp"
 
-#include "../lib/dataHandler.hpp"
+#include "lib/dataHandler.hpp"
 
 overview::overview(QWidget* parent) : QWidget(parent) {
 	m_catPie = new QPieSeries();

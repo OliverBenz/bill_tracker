@@ -1,8 +1,8 @@
 #include <QApplication>
 
-#include "mainWindow.hpp"
-#include "views/viewSelector.hpp"
 #include "lib/dataHandler.hpp"
+#include "ui/mainWindow.hpp"
+// #include "ui/viewSelector.hpp"
 
 int main(int argc, char** argv) {
 	lib::initializeProgram();

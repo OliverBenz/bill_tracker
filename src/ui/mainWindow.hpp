@@ -4,9 +4,9 @@
 #include <QVBoxLayout>
 #include <QTableView>
 
-#include "ui/billTable.hpp"
 #include "ui/toolBar.hpp"
 #include "addBillWidget.hpp"
+#include "ui/views/billTableView.hpp"
 
 class mainWindow : public QWidget {
 	Q_OBJECT
@@ -20,5 +20,5 @@ private:
 
 	toolBar* m_menuBar;
 	addBillWidget* m_addBillWidget;
-	billTable* m_billTable;
+	billTableView* m_billTable;
 };

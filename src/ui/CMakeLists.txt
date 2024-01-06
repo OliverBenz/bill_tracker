@@ -14,11 +14,12 @@ set(headers
     ${CMAKE_CURRENT_LIST_DIR}/aboutDialog.hpp
     ${CMAKE_CURRENT_LIST_DIR}/addBillWidget.hpp
     ${CMAKE_CURRENT_LIST_DIR}/displayWindow.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/billTable.hpp
     ${CMAKE_CURRENT_LIST_DIR}/viewSelector.hpp
     ${CMAKE_CURRENT_LIST_DIR}/overview.hpp
     ${CMAKE_CURRENT_LIST_DIR}/settingsWindow.hpp
     ${CMAKE_CURRENT_LIST_DIR}/toolBar.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/models/billTableModel.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/views/billTableView.hpp
 )
 
 set(sources
@@ -26,11 +27,12 @@ set(sources
     ${CMAKE_CURRENT_LIST_DIR}/aboutDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/addBillWidget.cpp
     ${CMAKE_CURRENT_LIST_DIR}/displayWindow.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/billTable.cpp
     ${CMAKE_CURRENT_LIST_DIR}/viewSelector.cpp
     ${CMAKE_CURRENT_LIST_DIR}/overview.cpp
     ${CMAKE_CURRENT_LIST_DIR}/settingsWindow.cpp
     ${CMAKE_CURRENT_LIST_DIR}/toolBar.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/models/billTableModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/views/billTableView.cpp
 )
 
 add_library(${targetName} STATIC ${headers} ${sources})

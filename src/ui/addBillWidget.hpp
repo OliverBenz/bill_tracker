@@ -7,12 +7,22 @@
 #include <QHBoxLayout>
 #include <QComboBox>
 
+#include "lib/bill.hpp"
+
 class addBillWidget : public QWidget {
 	Q_OBJECT
 
 public:
 	addBillWidget(QWidget* parent = nullptr);
 	~addBillWidget();
+
+signals:
+	void onNewBill(const lib::bill&);
+
+private slots:
+	void clearInputFields();
+	void writeBillToFile();
+	void updateSubCategories(int newCategory);
 
 private:
 	void setupInputMasks();
@@ -21,12 +31,6 @@ private:
 	//! Retrieve and display data from global json file
 	void fillStandardData();
 
-private slots:
-	void clearInputFields();
-	void writeBillToFile();
-	void updateSubCategories(int newCategory);
-
-private:
 	QVBoxLayout* m_lMain;
 	QHBoxLayout* m_lInputs;
 	QHBoxLayout* m_lButtons;

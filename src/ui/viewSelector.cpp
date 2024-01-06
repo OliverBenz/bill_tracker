@@ -1,7 +1,7 @@
 #include "viewSelector.hpp"
 
 viewSelector::viewSelector(QWidget* parent) : QTabWidget(parent) {
-	m_billTable = new billTable();
+	m_billTable = new billTableView();
 	m_billTable->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
 	m_overview = new overview();
 

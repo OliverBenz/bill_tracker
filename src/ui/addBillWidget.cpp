@@ -115,6 +115,8 @@ void addBillWidget::writeBillToFile() {
 
 	lib::addBill(b);
 
+    emit onNewBill(b);
+
 	clearInputFields();
 }
 

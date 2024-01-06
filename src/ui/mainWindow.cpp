@@ -6,11 +6,14 @@ mainWindow::mainWindow(QWidget* parent) : QWidget(parent) {
 	m_menuBar = new toolBar();
 	m_addBillWidget = new addBillWidget();
 
-	m_billTable = new billTable();
+	m_billTable = new billTableView();
 
 	m_lMain->setMenuBar(m_menuBar);
 	m_lMain->addWidget(m_addBillWidget);
 	m_lMain->addWidget(m_billTable);
+
+	connect(m_addBillWidget, SIGNAL(onNewBill(const lib::bill&)),
+            m_billTable, SLOT(insert(const lib::bill&)));
 }
 
 mainWindow::~mainWindow() {

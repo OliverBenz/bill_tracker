@@ -4,7 +4,7 @@
 #include <QTabWidget>
 #include <QTableView>
 
-#include "billTable.hpp"
+#include "ui/views/billTableView.hpp"
 #include "overview.hpp"
 
 class viewSelector : public QTabWidget {
@@ -19,7 +19,7 @@ private slots:
 
 private:
 	// Pages
-	billTable* m_billTable;
+	billTableView* m_billTable;
 	overview* m_overview;
 
 };

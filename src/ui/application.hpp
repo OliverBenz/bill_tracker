@@ -8,12 +8,12 @@
 #include "ui/views/addBillView.hpp"
 #include "ui/views/billTableView.hpp"
 
-class mainWindow : public QWidget {
+class Application : public QWidget {
 	Q_OBJECT
 
 public:
-	mainWindow(QWidget* parent = nullptr);
-	~mainWindow();
+	Application(QWidget* parent = nullptr);
+	~Application();
 
 private:
 	QVBoxLayout* m_lMain;

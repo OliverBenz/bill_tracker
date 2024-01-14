@@ -10,7 +10,7 @@ set(CMAKE_AUTOUIC ON) # Qt6 Settings
 set(targetName "billTrackerUi")
 
 set(headers
-    ${CMAKE_CURRENT_LIST_DIR}/mainWindow.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/application.hpp
     ${CMAKE_CURRENT_LIST_DIR}/aboutDialog.hpp
     ${CMAKE_CURRENT_LIST_DIR}/displayWindow.hpp
     ${CMAKE_CURRENT_LIST_DIR}/viewSelector.hpp
@@ -24,7 +24,7 @@ set(headers
 )
 
 set(sources
-    ${CMAKE_CURRENT_LIST_DIR}/mainWindow.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/application.cpp
     ${CMAKE_CURRENT_LIST_DIR}/aboutDialog.cpp
     ${CMAKE_CURRENT_LIST_DIR}/displayWindow.cpp
     ${CMAKE_CURRENT_LIST_DIR}/viewSelector.cpp

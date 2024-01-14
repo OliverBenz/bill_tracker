@@ -1,6 +1,6 @@
-#include "mainWindow.hpp"
+#include "application.hpp"
 
-mainWindow::mainWindow(QWidget* parent) : QWidget(parent) {
+Application::Application(QWidget* parent) : QWidget(parent) {
 	m_lMain = new QVBoxLayout(this);
 
 	m_menuBar = new toolBar();
@@ -16,7 +16,7 @@ mainWindow::mainWindow(QWidget* parent) : QWidget(parent) {
             m_billTable, SLOT(insert(const lib::bill&)));
 }
 
-mainWindow::~mainWindow() {
+Application::~Application() {
 	delete m_billTable;
 
 	delete m_addBillWidget;

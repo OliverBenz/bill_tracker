@@ -5,7 +5,7 @@
 #include <QTableView>
 
 #include "ui/toolBar.hpp"
-#include "addBillWidget.hpp"
+#include "ui/views/addBillView.hpp"
 #include "ui/views/billTableView.hpp"
 
 class mainWindow : public QWidget {
@@ -19,6 +19,6 @@ private:
 	QVBoxLayout* m_lMain;
 
 	toolBar* m_menuBar;
-	addBillWidget* m_addBillWidget;
+	AddBillView* m_addBillWidget;
 	billTableView* m_billTable;
 };

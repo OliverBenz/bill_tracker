@@ -4,7 +4,7 @@ mainWindow::mainWindow(QWidget* parent) : QWidget(parent) {
 	m_lMain = new QVBoxLayout(this);
 
 	m_menuBar = new toolBar();
-	m_addBillWidget = new addBillWidget();
+	m_addBillWidget = new AddBillView();
 
 	m_billTable = new billTableView();
 

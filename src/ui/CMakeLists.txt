@@ -12,9 +12,6 @@ set(targetName "billTrackerUi")
 set(headers
     ${CMAKE_CURRENT_LIST_DIR}/application.hpp
     ${CMAKE_CURRENT_LIST_DIR}/aboutDialog.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/displayWindow.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/viewSelector.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/overview.hpp
     ${CMAKE_CURRENT_LIST_DIR}/toolBar.hpp
 
     ${CMAKE_CURRENT_LIST_DIR}/views/addBillView.hpp
@@ -29,9 +26,6 @@ set(headers
 set(sources
     ${CMAKE_CURRENT_LIST_DIR}/application.cpp
     ${CMAKE_CURRENT_LIST_DIR}/aboutDialog.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/displayWindow.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/viewSelector.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/overview.cpp
     ${CMAKE_CURRENT_LIST_DIR}/toolBar.cpp
 
     ${CMAKE_CURRENT_LIST_DIR}/views/addBillView.cpp

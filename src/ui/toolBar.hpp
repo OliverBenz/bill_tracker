@@ -5,7 +5,7 @@
 #include <QAction>
 #include <QMenu>
 
-#include "settingsWindow.hpp"
+#include "ui/views/settingsView.hpp"
 
 class toolBar : public QMenuBar{
 	Q_OBJECT
@@ -36,6 +36,6 @@ private:
 	QAction* m_about;
 
 	// Windows
-	settingsWindow* m_windowSettings;
+	SettingsView* m_windowSettings;
 };
 

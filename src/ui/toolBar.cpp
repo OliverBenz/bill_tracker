@@ -56,7 +56,7 @@ void toolBar::createBackup() {
 }
 
 void toolBar::settings() {
-	m_windowSettings = new settingsWindow();
+	m_windowSettings = new SettingsView();
 	m_windowSettings->show();
 }
 

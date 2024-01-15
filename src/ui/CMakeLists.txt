@@ -10,27 +10,31 @@ set(CMAKE_AUTOUIC ON) # Qt6 Settings
 set(targetName "billTrackerUi")
 
 set(headers
-    ${CMAKE_CURRENT_LIST_DIR}/mainWindow.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/application.hpp
     ${CMAKE_CURRENT_LIST_DIR}/aboutDialog.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/addBillWidget.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/displayWindow.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/billTable.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/viewSelector.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/overview.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/settingsWindow.hpp
     ${CMAKE_CURRENT_LIST_DIR}/toolBar.hpp
+
+    ${CMAKE_CURRENT_LIST_DIR}/views/addBillView.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/views/billTableView.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/views/settingsView.hpp
+
+    ${CMAKE_CURRENT_LIST_DIR}/models/addBillModel.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/models/billTableModel.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/models/settingsModel.hpp
 )
 
 set(sources
-    ${CMAKE_CURRENT_LIST_DIR}/mainWindow.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/application.cpp
     ${CMAKE_CURRENT_LIST_DIR}/aboutDialog.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/addBillWidget.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/displayWindow.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/billTable.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/viewSelector.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/overview.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/settingsWindow.cpp
     ${CMAKE_CURRENT_LIST_DIR}/toolBar.cpp
+
+    ${CMAKE_CURRENT_LIST_DIR}/views/addBillView.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/views/billTableView.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/views/settingsView.cpp
+
+    ${CMAKE_CURRENT_LIST_DIR}/models/addBillModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/models/billTableModel.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/models/settingsModel.cpp
 )
 
 add_library(${targetName} STATIC ${headers} ${sources})

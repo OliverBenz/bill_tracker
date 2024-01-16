@@ -8,8 +8,10 @@ namespace lib {
 
 class billDbHandler::SqlitePimpl {
 public:
+    // TODO: Avoid raw pointer or make copy/move safe
     sqlite3* m_db{nullptr};
 };
+
 
 billDbHandler::billDbHandler()
     : m_sqlite(std::make_unique<billDbHandler::SqlitePimpl>()) {
@@ -18,6 +20,7 @@ billDbHandler::billDbHandler()
 
 billDbHandler::~billDbHandler() {
 	sqlite3_close(m_sqlite->m_db);
+    m_sqlite->m_db = nullptr;
 }
 
 bool billDbHandler::addCategory(const std::string& name) {
@@ -100,6 +103,83 @@ bool billDbHandler::addBill(const std::string& date, float price, unsigned shopI
     return true;
 }
 
+std::vector<usage> billDbHandler::getAllUsages() {
+    static constexpr char QUERY[] = "SELECT id, categoryId, name FROM usage";
+
+    sqlite3_stmt* statement;
+    if(sqlite3_prepare_v2(m_sqlite->m_db, QUERY, -1, &statement, nullptr) != SQLITE_OK) {
+        std::cerr << "[DB] Error reading usages.\n";
+    }
+
+    std::vector<usage> usages;
+    while(sqlite3_step(statement) == SQLITE_ROW) {
+        usages.emplace_back(
+            static_cast<unsigned>(sqlite3_column_int(statement, 0)),
+            static_cast<unsigned>(sqlite3_column_int(statement, 1)),
+            std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 2)))
+        );
+    }
+
+    sqlite3_finalize(statement);
+    return usages;
+}
+
+
+
+std::string billDbHandler::getUsageName(unsigned id) {
+    static constexpr char QUERY[] = "SELECT name FROM usage WHERE id IS {}";
+
+    sqlite3_stmt* statement;
+    if(sqlite3_prepare_v2(m_sqlite->m_db, fmt::format(QUERY, id).c_str(), -1, &statement, nullptr) != SQLITE_OK) {
+        std::cerr << "[DB] Error reading usage name.\n";
+    }
+
+    if (sqlite3_step(statement) != SQLITE_ROW) {
+        throw std::invalid_argument("Usage id does not exist.");
+    }
+
+    const auto usageName = std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 0)));
+    assert(sqlite3_step(statement) == SQLITE_DONE); // Make sure only one result.
+
+    return usageName;
+}
+
+std::string billDbHandler::getShopName(unsigned id) {
+    static constexpr char QUERY[] = "SELECT name FROM shops WHERE id IS {}";
+
+    sqlite3_stmt* statement;
+    if(sqlite3_prepare_v2(m_sqlite->m_db, fmt::format(QUERY, id).c_str(), -1, &statement, nullptr) != SQLITE_OK) {
+        std::cerr << "[DB] Error reading shop name.\n";
+    }
+
+    if (sqlite3_step(statement) != SQLITE_ROW) {
+        throw std::invalid_argument("Shop id does not exist.");
+    }
+
+    const auto shopName = std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 0)));
+    assert(sqlite3_step(statement) == SQLITE_DONE); // Make sure only one result.
+
+    return shopName;
+}
+
+std::string billDbHandler::getCategoryName(unsigned id) {
+    static constexpr char QUERY[] = "SELECT name FROM category WHERE id IS {}";
+
+    sqlite3_stmt* statement;
+    if(sqlite3_prepare_v2(m_sqlite->m_db, fmt::format(QUERY, id).c_str(), -1, &statement, nullptr) != SQLITE_OK) {
+        std::cerr << "[DB] Error reading category name.\n";
+    }
+
+    if (sqlite3_step(statement) != SQLITE_ROW) {
+        throw std::invalid_argument("Category id does not exist.");
+    }
+
+    const auto categoryName = std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 0)));
+    assert(sqlite3_step(statement) == SQLITE_DONE); // Make sure only one result.
+
+    return categoryName;
+}
+
 std::string billDbHandler::sanitize(const std::string& value) {
 	// Don't care for now. TODO: Implement
 	return value;
@@ -126,27 +206,6 @@ void billDbHandler::open() {
         std::cout << "[DB] Failed to enable foreign key constraint: " << errorMsg << '\n';
         sqlite3_free(errorMsg);
     }
-}
-
-
-
-void readDataTest() {
-    // TODO: Package this in proper classes
-    sqlite3* DB;
-//    char* messageError;
-    int exit = sqlite3_open("/home/oliver/.billtracker/data/expense_planner.db", &DB);
-    if (exit != SQLITE_OK) {
-        std::cerr << "Error open DB " << sqlite3_errmsg(DB) << std::endl;
-        return;
-    }
-    else {
-        std::cout << "Opened Database Successfully!" << std::endl;
-    }
-
-
-    // TODO: Read from db. Using a callback function
-
-    sqlite3_close(DB);
 }
 
 }

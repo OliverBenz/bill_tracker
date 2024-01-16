@@ -103,11 +103,13 @@ bool billDbHandler::addBill(const std::string& date, float price, unsigned shopI
     return true;
 }
 
-std::vector<usage> billDbHandler::getAllUsages() {
-    static constexpr char QUERY[] = "SELECT id, categoryId, name FROM usage";
+std::vector<usage> billDbHandler::getUsages(unsigned categoryId) {
+    static constexpr char QUERY_ALL[] = "SELECT id, categoryId, name FROM usage";
+	static constexpr char QUERY_SELECT[] = "SELECT id, categoryId, name FROM usage WHERE categoryId IS {}";
 
+	std::string sql = categoryId == 0 ? std::string(QUERY_ALL) : fmt::format(QUERY_SELECT, categoryId);
     sqlite3_stmt* statement;
-    if(sqlite3_prepare_v2(m_sqlite->m_db, QUERY, -1, &statement, nullptr) != SQLITE_OK) {
+    if(sqlite3_prepare_v2(m_sqlite->m_db, sql.c_str(), -1, &statement, nullptr) != SQLITE_OK) {
         std::cerr << "[DB] Error reading usages.\n";
     }
 
@@ -124,7 +126,55 @@ std::vector<usage> billDbHandler::getAllUsages() {
     return usages;
 }
 
+std::vector<shop> billDbHandler::getShops() {
+	static constexpr char QUERY[] = "SELECT id, name FROM shops";
 
+	sqlite3_stmt* statement;
+	if(sqlite3_prepare_v2(m_sqlite->m_db, QUERY, -1, &statement, nullptr) != SQLITE_OK) {
+		std::cerr << "[DB] Error reading shops.\n";
+	}
+
+	std::vector<shop> shops;
+	while(sqlite3_step(statement) == SQLITE_ROW) {
+		shops.emplace_back(
+				static_cast<unsigned>(sqlite3_column_int(statement, 0)),
+				std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 1)))
+		);
+	}
+
+	sqlite3_finalize(statement);
+	return shops;
+}
+
+std::vector<category1> billDbHandler::getCategories() {
+	static constexpr char QUERY[] = "SELECT id, name FROM category";
+
+	sqlite3_stmt* statement;
+	if(sqlite3_prepare_v2(m_sqlite->m_db, QUERY, -1, &statement, nullptr) != SQLITE_OK) {
+		std::cerr << "[DB] Error reading categories.\n";
+	}
+
+	std::vector<category1> categories;
+	while(sqlite3_step(statement) == SQLITE_ROW) {
+		categories.emplace_back(
+				static_cast<unsigned>(sqlite3_column_int(statement, 0)),
+				std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 1)))
+		);
+	}
+
+	sqlite3_finalize(statement);
+	return categories;
+}
+
+std::vector<bill1> billDbHandler::getBills(const std::string& date, unsigned categoryId, unsigned shopId) {
+	static constexpr char QUERY_FULL[] = "SELECT (id, shopId, usageId, price, date, filename) from bills";
+
+	std::string sql = std::string(QUERY_FULL);
+	if(!date.empty()) {
+		// TODO: Continue this shit
+		sql += fmt::format(" WHERE date IS '{}'", date);
+	}
+}
 
 std::string billDbHandler::getUsageName(unsigned id) {
     static constexpr char QUERY[] = "SELECT name FROM usage WHERE id IS {}";

@@ -6,6 +6,8 @@
 
 #include "types/usage.hpp"
 #include "types/category.hpp"
+#include "types/bill.hpp"
+#include "shop.hpp"
 
 namespace lib {
 
@@ -22,12 +24,11 @@ public:
     bool addBill(const std::string& date, float price, unsigned shopId, unsigned usageId, const std::string& filename = "");
 
 // Get whole table
-    std::vector<usage> getAllUsages(/* TODO: Extend for: unsigned categoryId = 0*/);
-/*
+    std::vector<usage> getUsages(unsigned categoryId = 0);
     std::vector<shop> getShops();
-    std::vector<category> getCategories();
-    std::vector<bill> getBills(const std::string& date = "", unsigned categoryId = 0, unsigned shopId = 0);
-*/
+	std::vector<category1> getCategories();  //!< TODO: Rename struct
+    std::vector<bill1> getBills(const std::string& date = "", unsigned categoryId = 0, unsigned shopId = 0);
+
 
 // Get one row from table
 

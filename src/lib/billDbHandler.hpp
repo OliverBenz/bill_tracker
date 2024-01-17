@@ -7,7 +7,7 @@
 #include "types/usage.hpp"
 #include "types/category.hpp"
 #include "types/bill.hpp"
-#include "shop.hpp"
+#include "types/shop.hpp"
 
 namespace lib {
 

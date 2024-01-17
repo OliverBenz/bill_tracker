@@ -74,7 +74,7 @@ void AddBillView::fillStandardData() {
 
     const auto categories = m_logic.getCategories();
     for(const auto& category : categories)
-        m_cbCategory->insertItem(category.id, QString(category.name.c_str()));
+        m_cbCategory->insertItem(static_cast<int>(category.id), QString(category.name.c_str()));
 }
 
 void AddBillView::clearInputFields() {
@@ -86,9 +86,9 @@ void AddBillView::clearInputFields() {
 void AddBillView::writeBillToFile() {
     // Get Data from UI
     std::string date = m_leDate->text().toStdString();
-    int shopId = m_cbShop->currentIndex();
-    int categoryId = m_cbCategory->currentIndex();
-    int subCategoryId = m_cbCategorySub->currentIndex();
+    const auto shopId = static_cast<unsigned>(m_cbShop->currentIndex());
+	const auto categoryId = static_cast<unsigned>(m_cbCategory->currentIndex());
+	const auto subCategoryId = static_cast<unsigned>(m_cbCategorySub->currentIndex());
     std::string price = m_lePrice->text().toStdString();
 
     if (!AddBillModel::isValidBillInfo(date, shopId, categoryId, subCategoryId, price)){

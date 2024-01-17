@@ -1,4 +1,4 @@
-#include "databaseAccessHandler.hpp"
+#include "billDbHandler.hpp"
 
 #include <fmt/format.h>
 #include <iostream>
@@ -166,14 +166,36 @@ std::vector<category1> billDbHandler::getCategories() {
 	return categories;
 }
 
-std::vector<bill1> billDbHandler::getBills(const std::string& date, unsigned categoryId, unsigned shopId) {
-	static constexpr char QUERY_FULL[] = "SELECT (id, shopId, usageId, price, date, filename) from bills";
+std::vector<bill1> billDbHandler::getBills(const std::string&, unsigned, unsigned) {
+	static constexpr char QUERY_FULL[] = "SELECT id, shopId, usageId, price, date, filename FROM bills";
 
+    /*
 	std::string sql = std::string(QUERY_FULL);
 	if(!date.empty()) {
 		// TODO: Continue this shit
 		sql += fmt::format(" WHERE date IS '{}'", date);
 	}
+ */
+
+    sqlite3_stmt* statement;
+    if(sqlite3_prepare_v2(m_sqlite->m_db, QUERY_FULL, -1, &statement, nullptr) != SQLITE_OK) {
+        std::cerr << "[DB] Error reading bills.\n";
+    }
+
+    std::vector<bill1> bills;
+    while(sqlite3_step(statement) == SQLITE_ROW) {
+        bills.emplace_back(
+        static_cast<unsigned>(sqlite3_column_int(statement, 0)),
+        static_cast<unsigned>(sqlite3_column_int(statement, 1)),
+        static_cast<unsigned>(sqlite3_column_int(statement, 2)),
+        static_cast<float>(sqlite3_column_double(statement, 3)),
+        reinterpret_cast<const char*>(sqlite3_column_text(statement, 4)),
+        reinterpret_cast<const char*>(sqlite3_column_text(statement, 5))
+        );
+    }
+
+    sqlite3_finalize(statement);
+    return bills;
 }
 
 std::string billDbHandler::getUsageName(unsigned id) {

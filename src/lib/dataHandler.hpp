@@ -2,23 +2,30 @@
 
 #include <vector>
 
+#include "types/bill.hpp"
+#include "types/category.hpp"
 #include "file.hpp"
 #include "bill.hpp"
-#include "shop.hpp"
+#include "types/shop.hpp"
 #include "category.hpp"
+#include "types/usage.hpp"
 
 namespace lib {
 
 //! Add a new bill to the system.
-bool addBill(const bill& newBill);
+bool addBill(const bill1& newBill);
 
 //! Get a list of bills from a specific date. All bills if date is empty.
-std::vector<bill> getBills(const std::string& date);
+std::vector<lib::bill1> getBills(const std::string& date = "");
 
 //! Get a list of all shops.
 std::vector<shop> getShops();
+
+//! Get a list of all usages.
+std::vector<usage> getUsages();
+
 //! Get a list of all categories.
-std::vector<category> getCategories();
+std::vector<category1> getCategories();
 //! Get a list of all subcategories of a specific category.
 std::vector<subcategory> getSubCategories(int categoryId);
 

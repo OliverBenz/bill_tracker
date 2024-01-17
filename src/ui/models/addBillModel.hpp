@@ -1,7 +1,8 @@
 #pragma once
 
+#include "lib/types/category.hpp"
 #include "lib/bill.hpp"
-#include "lib/shop.hpp"
+#include "lib/types/shop.hpp"
 #include "lib/category.hpp"
 #include "lib/dataHandler.hpp"
 #include "lib/dateHandler.hpp"
@@ -11,15 +12,15 @@ public:
     AddBillModel();
 
     std::vector<lib::shop>& getShops();
-    std::vector<lib::category>& getCategories();
-    std::vector<lib::subcategory> getSubCategories(const int category);
+    std::vector<lib::category1>& getCategories();
+    std::vector<lib::subcategory> getSubCategories(int category);
 
-    void addNewBill(const lib::bill& bill);
+    void addNewBill(const lib::bill1& bill);
 
-    static bool isValidBillInfo(std::string date, int , int , int , std::string );
-    static lib::bill constructBill(std::string date, int shop, int category, int subCategory, std::string price);
+    static bool isValidBillInfo(std::string date, unsigned , unsigned , unsigned , std::string );
+    static lib::bill1 constructBill(std::string date, unsigned shop, unsigned category, unsigned subCategory, std::string price);
 
 private:
     std::vector<lib::shop> m_shops;
-    std::vector<lib::category> m_categories;
+    std::vector<lib::category1> m_categories;
 };

@@ -21,7 +21,7 @@ public:
 
 public slots:
 	//! Insert a new bill to the table.
-	bool insert(const lib::bill& newBill);
+	bool insert(const lib::bill1& newBill);
 
 private:
 	//! Get all bills from file and show in table.
@@ -31,7 +31,7 @@ private:
 	void setHeader();
 
 	//! Add a new line to the table.
-	void appendBill(const lib::bill& bill);
+	void appendBill(const lib::bill1& bill);
 
 private:
 	billTableModel m_logic; //!< Handles data and all non-UI related tasks.

@@ -9,19 +9,19 @@ set(targetName "billTrackerLib")
 # Sources
 set(headers 
     ${CMAKE_CURRENT_LIST_DIR}/bill.hpp 
-    ${CMAKE_CURRENT_LIST_DIR}/shop.hpp 
+    ${CMAKE_CURRENT_LIST_DIR}/types/shop.hpp
     ${CMAKE_CURRENT_LIST_DIR}/file.hpp 
     ${CMAKE_CURRENT_LIST_DIR}/dateHandler.hpp 
     ${CMAKE_CURRENT_LIST_DIR}/dataHandler.hpp 
     ${CMAKE_CURRENT_LIST_DIR}/IDataAccessHandler.hpp
     ${CMAKE_CURRENT_LIST_DIR}/fileAccessHandler.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/databaseAccessHandler.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/billDbHandler.hpp
 )
 set(sources 
     ${CMAKE_CURRENT_LIST_DIR}/dateHandler.cpp 
     ${CMAKE_CURRENT_LIST_DIR}/dataHandler.cpp 
     ${CMAKE_CURRENT_LIST_DIR}/fileAccessHandler.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/databaseAccessHandler.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/billDbHandler.cpp
 )
 
 add_library(${targetName} STATIC ${headers} ${sources})

@@ -2,7 +2,7 @@
 
 #include "file.hpp"
 #include "bill.hpp"
-#include "shop.hpp"
+#include "types/shop.hpp"
 #include "category.hpp"
 
 #include <vector>

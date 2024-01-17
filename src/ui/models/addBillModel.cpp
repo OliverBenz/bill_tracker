@@ -9,7 +9,7 @@ std::vector<lib::shop>& AddBillModel::getShops() {
     return m_shops;
 }
 
-std::vector<lib::category>& AddBillModel::getCategories() {
+std::vector<lib::category1>& AddBillModel::getCategories() {
     return m_categories;
 }
 
@@ -17,11 +17,11 @@ std::vector<lib::subcategory> AddBillModel::getSubCategories(const int category)
     return lib::getSubCategories(category);
 }
 
-void AddBillModel::addNewBill(const lib::bill& bill){
+void AddBillModel::addNewBill(const lib::bill1& bill){
     lib::addBill(bill);
 }
 
-bool AddBillModel::isValidBillInfo(std::string date, int , int , int , std::string ) {
+bool AddBillModel::isValidBillInfo(std::string date, unsigned , unsigned , unsigned , std::string ) {
     if(!lib::dateIsValid(date)) {
         return false;
     }
@@ -29,14 +29,13 @@ bool AddBillModel::isValidBillInfo(std::string date, int , int , int , std::stri
     // TODO: Check other inputs
 }
 
-lib::bill AddBillModel::constructBill(std::string date, int shop, int category, int subCategory, std::string price) {
+lib::bill1 AddBillModel::constructBill(std::string date, unsigned shop, unsigned, unsigned subCategory, std::string price) {
 
     // Construct bill struct
-    lib::bill bill;
+    lib::bill1 bill;
     bill.date = date;
-    bill.shop = shop;
-    bill.category = category;
-    bill.subCategory = subCategory;
+    bill.shopId = shop;
+    bill.usageId = subCategory;
 
     // Convert price to float
     std::replace(price.begin(), price.end(), ',', '.');  // Use decimal dot for price

@@ -18,7 +18,7 @@ public:
     ~AddBillView();
 
 signals:
-    void onNewBill(const lib::bill&);
+    void onNewBill(const lib::bill1&);
 
 private slots:
     void clearInputFields();

@@ -32,19 +32,14 @@ std::vector<shop> getShops() {
 	return accessHandler->getShops();
 }
 
-std::vector<usage> getUsages() {
+std::vector<usage> getUsages(unsigned categoryId) {
     const auto accessHandler = std::make_unique<billDbHandler>();
-    return accessHandler->getUsages();
+    return accessHandler->getUsages(categoryId);
 }
 
 std::vector<category1> getCategories() {
 	const auto accessHandler = std::make_unique<billDbHandler>();
 	return accessHandler->getCategories();
-}
-
-std::vector<subcategory> getSubCategories(int categoryId) {
-	const auto accessHandler = getAccessHandler();
-	return accessHandler->getSubCategories(categoryId);
 }
 
 std::string getAppAuthor() {

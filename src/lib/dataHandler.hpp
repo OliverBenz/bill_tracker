@@ -22,12 +22,10 @@ std::vector<lib::bill1> getBills(const std::string& date = "");
 std::vector<shop> getShops();
 
 //! Get a list of all usages.
-std::vector<usage> getUsages();
+std::vector<usage> getUsages(unsigned categoryId = 0);
 
 //! Get a list of all categories.
 std::vector<category1> getCategories();
-//! Get a list of all subcategories of a specific category.
-std::vector<subcategory> getSubCategories(int categoryId);
 
 // ----- Application data -----
 //! Setup all required infrastructure for the program if necessary.

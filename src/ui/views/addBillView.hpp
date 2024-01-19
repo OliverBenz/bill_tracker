@@ -23,7 +23,7 @@ signals:
 private slots:
     void clearInputFields();
     void writeBillToFile();
-    void updateSubCategories(int newCategory);
+    void updateUsages(int newCategory);
 
 private:
     void setupInputMasks();

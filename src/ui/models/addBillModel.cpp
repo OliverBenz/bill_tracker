@@ -13,8 +13,9 @@ std::vector<lib::category1>& AddBillModel::getCategories() {
     return m_categories;
 }
 
-std::vector<lib::subcategory> AddBillModel::getSubCategories(const int category) {
-    return lib::getSubCategories(category);
+
+std::vector<lib::usage> AddBillModel::getUsages(unsigned category) {
+    return lib::getUsages(category);
 }
 
 void AddBillModel::addNewBill(const lib::bill1& bill){

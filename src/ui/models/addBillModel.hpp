@@ -1,6 +1,7 @@
 #pragma once
 
 #include "lib/types/category.hpp"
+#include "lib/types/usage.hpp"
 #include "lib/bill.hpp"
 #include "lib/types/shop.hpp"
 #include "lib/category.hpp"
@@ -13,7 +14,7 @@ public:
 
     std::vector<lib::shop>& getShops();
     std::vector<lib::category1>& getCategories();
-    std::vector<lib::subcategory> getSubCategories(int category);
+    std::vector<lib::usage> getUsages(unsigned category = 0);
 
     void addNewBill(const lib::bill1& bill);
 

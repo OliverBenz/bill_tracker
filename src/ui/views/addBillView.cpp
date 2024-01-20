@@ -1,8 +1,5 @@
 #include "addBillView.hpp"
 
-#include <sstream>
-#include <locale>
-
 AddBillView::AddBillView(QWidget* parent) : QWidget(parent) {
     // Create widgets
     m_lMain = new QVBoxLayout(this);
@@ -63,18 +60,21 @@ void AddBillView::setupInputMasks() {
 void AddBillView::setupConnections() {
     connect(m_bAdd, SIGNAL(clicked()), this, SLOT(writeBillToFile()));
     connect(m_bClear, SIGNAL(clicked()), this, SLOT(clearInputFields()));
-    connect(m_cbCategory, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSubCategories(int)));
+    connect(m_cbCategory, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUsages(int)));
 }
 
 void AddBillView::fillStandardData() {
+    const auto& shops = m_logic.getShops();
+    for (const auto& shop : shops) {
+        m_cbShop->addItem(QString(shop.name.c_str()), QVariant(shop.id));
+    }
 
-    const auto shops = m_logic.getShops();
-    for (const auto& shop : shops)
-        m_cbShop->insertItem(shop.id, QString(shop.name.c_str()));
-
-    const auto categories = m_logic.getCategories();
-    for(const auto& category : categories)
-        m_cbCategory->insertItem(category.id, QString(category.name.c_str()));
+    // Filling this QBox automatically triggers the signal currentIndexChanged.
+    // The usage QBox therefore does not have to be initialized here.
+    const auto& categories = m_logic.getCategories();
+    for(const auto& category : categories) {
+        m_cbCategory->addItem(QString(category.name.c_str()), QVariant(category.id));
+    }
 }
 
 void AddBillView::clearInputFields() {
@@ -86,9 +86,10 @@ void AddBillView::clearInputFields() {
 void AddBillView::writeBillToFile() {
     // Get Data from UI
     std::string date = m_leDate->text().toStdString();
-    int shopId = m_cbShop->currentIndex();
-    int categoryId = m_cbCategory->currentIndex();
-    int subCategoryId = m_cbCategorySub->currentIndex();
+    const unsigned shopId = m_cbShop->currentData().toUInt();
+	const unsigned categoryId = m_cbCategory->currentData().toUInt();
+	const unsigned subCategoryId = m_cbCategorySub->currentData().toUInt();
+
     std::string price = m_lePrice->text().toStdString();
 
     if (!AddBillModel::isValidBillInfo(date, shopId, categoryId, subCategoryId, price)){
@@ -104,10 +105,14 @@ void AddBillView::writeBillToFile() {
     clearInputFields();
 }
 
-void AddBillView::updateSubCategories(const int newCategory) {
-    const auto subcats = m_logic.getSubCategories(newCategory);
+//! Note: the int passed to this function is the ID in the QBox; not the current user-set index!
+//! The index manually set to QBox userData is what we want. We get this using currentData().
+void AddBillView::updateUsages(const int) {
+    const unsigned newCategory = m_cbCategory->currentData().toUInt();
+    const auto usages = m_logic.getUsages(static_cast<unsigned>(newCategory));
     m_cbCategorySub->clear();
 
-    for (const auto& cat : subcats)
-        m_cbCategorySub->insertItem(cat.id, QString(cat.name.c_str()));
+    for (const auto& cat : usages) {
+        m_cbCategorySub->addItem(QString(cat.name.c_str()), QVariant(cat.id));
+    }
 }

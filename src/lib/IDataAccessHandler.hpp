@@ -1,9 +1,9 @@
 #pragma once
 
-#include "file.hpp"
-#include "bill.hpp"
-#include "shop.hpp"
-#include "category.hpp"
+#include "types/file.hpp"
+#include "types/bill.hpp"
+#include "types/shop.hpp"
+#include "types/category.hpp"
 
 #include <vector>
 #include <string>
@@ -22,15 +22,6 @@ protected:
 
 public:
 	virtual ~IDataAccessHandler() = default;
-
-// Bill data
-	virtual bool addBill(const bill& newBill) const = 0;
-
-	virtual std::vector<bill> getBills(const std::string& date) const = 0;
-	virtual std::vector<shop> getShops() const = 0;
-
-	virtual std::vector<category> getCategories() const = 0;
-	virtual std::vector<subcategory> getSubCategories(int categoryId) const = 0;
 
 	virtual bool createBackup() const = 0;
 
@@ -61,10 +52,6 @@ public:
 	* @return False if an error occurred.
 	*/
 	virtual bool updateFilePath(file fileName, const std::string& newPath) const = 0;
-
-#ifndef NDEBUG
-	virtual void writeDebugData() const = 0;
-#endif
 };
 
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lib/bill.hpp"
+#include "lib/types/bill.hpp"
 
 #include <map>
 #include <vector>
@@ -20,17 +20,16 @@ public:
 
 	bool editBill(const int billId, const lib::bill& newInfo);
 */
-	const std::string& getShopName(int shopId);
-	const std::string& getCategoryName(int categoryId);
-	const std::string& getSubCategoryName(int categoryId, int subCategoryId);
+	const std::string& getShopName(unsigned shopId);
+	//! Get the category name of the corresponding usage.
+	const std::string& getCategoryName(unsigned usageId);
+	const std::string& getUsageName(unsigned usageId);
 
 private:
 	std::vector<lib::bill> m_data;
 	// Used to resolve the ids from the bill classes passed to insert().
-	std::map<int, std::string> m_shops;
-	std::map<int, std::string> m_categories;
-
-	// Category id - pair of (subcat.id, subcat.name)
-	std::map<std::pair<int, int>, std::string> m_subcategories;
+	std::map<unsigned, std::string> m_shops;
+	std::map<unsigned, std::string> m_categories;
+    std::map<unsigned, std::string> m_usages;
+	std::map<unsigned, unsigned> m_usageCategory; //!< 0-> UsageId, 1->CategoryId
 };
-

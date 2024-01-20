@@ -1,5 +1,6 @@
 #include "dataHandler.hpp"
 #include "fileAccessHandler.hpp"
+#include "billDbHandler.hpp"
 
 #include <memory>
 
@@ -17,28 +18,28 @@ void initializeProgram() {
 }
 
 bool addBill(const bill& newBill) {
-	const auto accessHandler = getAccessHandler();
-	return accessHandler->addBill(newBill);
+	const auto accessHandler = std::make_unique<billDbHandler>();
+	return accessHandler->addBill(newBill.date, newBill.price, newBill.shopId, newBill.usageId);
 }
 
 std::vector<bill> getBills(const std::string& date) {
-	const auto accessHandler = getAccessHandler();
+	const auto accessHandler = std::make_unique<billDbHandler>();
 	return accessHandler->getBills(date);
 }
 
 std::vector<shop> getShops() {
-	const auto accessHandler = getAccessHandler();
+	const auto accessHandler = std::make_unique<billDbHandler>();
 	return accessHandler->getShops();
 }
 
-std::vector<category> getCategories() {
-	const auto accessHandler = getAccessHandler();
-	return accessHandler->getCategories();
+std::vector<usage> getUsages(unsigned categoryId) {
+    const auto accessHandler = std::make_unique<billDbHandler>();
+    return accessHandler->getUsages(categoryId);
 }
 
-std::vector<subcategory> getSubCategories(int categoryId) {
-	const auto accessHandler = getAccessHandler();
-	return accessHandler->getSubCategories(categoryId);
+std::vector<category> getCategories() {
+	const auto accessHandler = std::make_unique<billDbHandler>();
+	return accessHandler->getCategories();
 }
 
 std::string getAppAuthor() {

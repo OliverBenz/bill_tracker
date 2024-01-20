@@ -1,11 +1,14 @@
 #include "fileAccessHandler.hpp"
+
 #include "dateHandler.hpp"
+
+#include <nlohmann/json.hpp>
+#include <fmt/format.h>
 
 #include <sstream>
 #include <fstream>
 #include <iostream>
-
-#include <fmt/format.h>
+#include <filesystem>
 
 namespace lib {
 
@@ -15,89 +18,6 @@ namespace lib {
 //       	"2022-05_data.json", "2022-06_data.json", etc
 
 // TODO: Make path with cmake and setup standard files
-
-bool fileAccessHandler::addBill(const bill& newBill) const {
-	const std::string pathBillFile = getFilePath(file::bills);
-	std::ifstream input(pathBillFile);
-
-	nlohmann::json jsonFile = nlohmann::json::parse(input);
-
-	if(jsonFile.find("bills") != jsonFile.end())
-		jsonFile.at("bills").push_back(newBill);
-
-	std::ofstream output(pathBillFile);
-	output << std::setw(4) << jsonFile << std::endl;
-
-	return false;
-}
-
-std::vector<bill> fileAccessHandler::getBills(const std::string& date) const {
-	const std::string billsFilePath = getFilePath(file::bills);
-	if (!std::filesystem::exists(billsFilePath)) {
-		initializeProgram();
-	}
-
-	std::ifstream jsonFile(billsFilePath);
-	nlohmann::json json =  nlohmann::json::parse(jsonFile);
-
-	std::vector<bill> result;
-	if (!date.empty()) {
-		for(const nlohmann::json& jsonBill : json.at("bills")) {
-			if(jsonBill.at("date") == date) {
-				bill temp;
-				nlohmann::from_json(jsonBill, temp);
-
-				result.push_back(temp);
-			}
-		}
-	} else {
-		json.at("bills").get_to(result);
-	}
-
-	return result;
-}
-
-std::vector<shop> fileAccessHandler::getShops() const {
-	std::ifstream jsonFile(getFilePath(file::data));
-	nlohmann::json json = nlohmann::json::parse(jsonFile);
-
-	std::vector<shop> shops;
-	nlohmann::from_json(json.at("shops"), shops);
-
-	return shops;
-}
-
-std::vector<category> fileAccessHandler::getCategories() const {
-	std::ifstream jsonFile(getFilePath(file::data));
-	nlohmann::json json = nlohmann::json::parse(jsonFile);
-
-	if(json.find("categories") == json.end())
-		return {};
-
-	std::vector<category> categories;
-	nlohmann::from_json(json.at("categories"), categories);
-
-	return categories;
-}
-
-std::vector<subcategory> fileAccessHandler::getSubCategories(int categoryId) const {
-	std::ifstream jsonFile(getFilePath(file::data));
-	nlohmann::json json = nlohmann::json::parse(jsonFile);
-
-	if(json.find("categories") == json.end())
-		return {};
-
-	std::vector<subcategory> subcats;
-	for(const auto& j : json.at("categories")) {
-		const int id = j.at("id").get<int>();
-		if(id == categoryId && j.find("subCategories") != j.end()) {
-			nlohmann::from_json(j.at("subCategories"), subcats);
-			break;
-		}
-	}
-
-	return subcats;
-}
 
 void fileAccessHandler::initializeProgram() const {
 	if(std::filesystem::exists(m_filenameConfig)) {
@@ -306,19 +226,5 @@ std::string fileAccessHandler::getFileName(const file fileName) {
 	}
 	return "";
 }
-
-#ifndef NDEBUG
-void fileAccessHandler::writeDebugData() const {
-	subcategory subCatA{0, "Sub Test A"};
-	subcategory subCatB{1, "Sub Test B"};
-	category catA {0, "Test A", {subCatA, subCatB}};
-	shop sh{0, "Shop A"};
-
-	bill b{"25.12.1999", 0, 0, 0, 0.99f};
-	//addShop(shop);  // TODO: Implement these two
-	//addCategory{catA};
-	addBill(b);
-}
-#endif
 
 }

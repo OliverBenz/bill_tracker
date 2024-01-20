@@ -4,7 +4,7 @@
 
 namespace lib {
 
-struct bill1 {
+struct bill {
 	unsigned id;
 	unsigned shopId;
 	unsigned usageId;

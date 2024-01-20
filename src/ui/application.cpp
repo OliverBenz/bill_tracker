@@ -12,8 +12,8 @@ Application::Application(QWidget* parent) : QWidget(parent) {
 	m_lMain->addWidget(m_addBillWidget);
 	m_lMain->addWidget(m_billTable);
 
-	connect(m_addBillWidget, SIGNAL(onNewBill(const lib::bill1&)),
-            m_billTable, SLOT(insert(const lib::bill1&)));
+	connect(m_addBillWidget, SIGNAL(onNewBill(const lib::bill&)),
+            m_billTable, SLOT(insert(const lib::bill&)));
 }
 
 Application::~Application() {

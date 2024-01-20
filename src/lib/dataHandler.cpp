@@ -17,12 +17,12 @@ void initializeProgram() {
 	accessHandler->initializeProgram();
 }
 
-bool addBill(const bill1& newBill) {
+bool addBill(const bill& newBill) {
 	const auto accessHandler = std::make_unique<billDbHandler>();
 	return accessHandler->addBill(newBill.date, newBill.price, newBill.shopId, newBill.usageId);
 }
 
-std::vector<bill1> getBills(const std::string& date) {
+std::vector<bill> getBills(const std::string& date) {
 	const auto accessHandler = std::make_unique<billDbHandler>();
 	return accessHandler->getBills(date);
 }
@@ -37,7 +37,7 @@ std::vector<usage> getUsages(unsigned categoryId) {
     return accessHandler->getUsages(categoryId);
 }
 
-std::vector<category1> getCategories() {
+std::vector<category> getCategories() {
 	const auto accessHandler = std::make_unique<billDbHandler>();
 	return accessHandler->getCategories();
 }

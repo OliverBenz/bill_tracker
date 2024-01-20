@@ -64,7 +64,6 @@ void AddBillView::setupConnections() {
 }
 
 void AddBillView::fillStandardData() {
-
     const auto& shops = m_logic.getShops();
     for (const auto& shop : shops) {
         m_cbShop->addItem(QString(shop.name.c_str()), QVariant(shop.id));

@@ -5,6 +5,7 @@
 
 #include "lib/billDbHandler.hpp"
 #include <iostream>
+
 int main(int argc, char** argv) {
 	lib::initializeProgram();
 

@@ -1,5 +1,9 @@
 #include "addBillModel.hpp"
 
+#include <algorithm>
+#include <sstream>
+#include <locale>
+
 AddBillModel::AddBillModel(){
     m_shops = lib::getShops();
     m_categories = lib::getCategories();
@@ -9,7 +13,7 @@ std::vector<lib::shop>& AddBillModel::getShops() {
     return m_shops;
 }
 
-std::vector<lib::category1>& AddBillModel::getCategories() {
+std::vector<lib::category>& AddBillModel::getCategories() {
     return m_categories;
 }
 
@@ -18,7 +22,7 @@ std::vector<lib::usage> AddBillModel::getUsages(unsigned category) {
     return lib::getUsages(category);
 }
 
-void AddBillModel::addNewBill(const lib::bill1& bill){
+void AddBillModel::addNewBill(const lib::bill& bill){
     lib::addBill(bill);
 }
 
@@ -30,10 +34,10 @@ bool AddBillModel::isValidBillInfo(std::string date, unsigned , unsigned , unsig
     // TODO: Check other inputs
 }
 
-lib::bill1 AddBillModel::constructBill(std::string date, unsigned shop, unsigned, unsigned subCategory, std::string price) {
+lib::bill AddBillModel::constructBill(std::string date, unsigned shop, unsigned, unsigned subCategory, std::string price) {
 
     // Construct bill struct
-    lib::bill1 bill;
+    lib::bill bill;
     bill.date = date;
     bill.shopId = shop;
     bill.usageId = subCategory;

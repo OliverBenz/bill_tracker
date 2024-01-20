@@ -27,7 +27,7 @@ void billTableView::initShow() {
 	setModel(m_model);
 }
 
-bool billTableView::insert(const lib::bill1& bill) {
+bool billTableView::insert(const lib::bill& bill) {
 	// Add bill to logic
 	m_logic.insertBill(bill);
 
@@ -36,7 +36,7 @@ bool billTableView::insert(const lib::bill1& bill) {
 	return true;
 }
 
-void billTableView::appendBill(const lib::bill1& bill) {
+void billTableView::appendBill(const lib::bill& bill) {
 	// TODO: Assert all information can be resolved
 	QList<QStandardItem*> items;
 	items.append(new QStandardItem(bill.date.c_str()));

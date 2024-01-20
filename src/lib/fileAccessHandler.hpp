@@ -2,21 +2,14 @@
 
 #include "IDataAccessHandler.hpp"
 
+#include <string>
+
 namespace lib {
 
 class fileAccessHandler : public IDataAccessHandler {
 public:
 	fileAccessHandler() = default;
 	~fileAccessHandler() = default;
-
-// Bill data
-	bool addBill(const bill& newBill) const override;
-
-	std::vector<bill> getBills(const std::string& date) const override;
-	std::vector<shop> getShops() const override;
-
-	std::vector<category> getCategories() const override;
-	std::vector<subcategory> getSubCategories(int categoryId) const override;
 
 	bool createBackup() const override;
 
@@ -48,12 +41,8 @@ public:
 	*/
 	bool updateFilePath(file fileName, const std::string& newPath) const override;
 
-#ifndef NDEBUG
-	void writeDebugData() const override;
-#endif
-
 private:
-	static std::string getFileName(const file fileName);
+	static std::string getFileName(file fileName);
 
 	static constexpr char m_projectPath[] = "/home/oliver/.billtracker";
 	static constexpr char m_filenameConfig[] = "/home/oliver/.billtracker/data/settings.json";

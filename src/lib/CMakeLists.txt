@@ -7,11 +7,14 @@ endif()
 set(targetName "billTrackerLib")
 
 # Sources
-set(headers 
-    ${CMAKE_CURRENT_LIST_DIR}/bill.hpp 
+set(headers
+    ${CMAKE_CURRENT_LIST_DIR}/types/bill.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/types/category.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/types/file.hpp
     ${CMAKE_CURRENT_LIST_DIR}/types/shop.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/file.hpp 
-    ${CMAKE_CURRENT_LIST_DIR}/dateHandler.hpp 
+    ${CMAKE_CURRENT_LIST_DIR}/types/usage.hpp
+
+    ${CMAKE_CURRENT_LIST_DIR}/dateHandler.hpp
     ${CMAKE_CURRENT_LIST_DIR}/dataHandler.hpp 
     ${CMAKE_CURRENT_LIST_DIR}/IDataAccessHandler.hpp
     ${CMAKE_CURRENT_LIST_DIR}/fileAccessHandler.hpp

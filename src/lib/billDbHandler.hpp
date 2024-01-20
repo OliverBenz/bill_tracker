@@ -1,13 +1,13 @@
 #pragma once
 
-#include <memory>
-#include <string>
-#include "bill.hpp"
-
 #include "types/usage.hpp"
 #include "types/category.hpp"
 #include "types/bill.hpp"
 #include "types/shop.hpp"
+
+#include <memory>
+#include <string>
+#include <vector>
 
 namespace lib {
 
@@ -26,8 +26,8 @@ public:
 // Get whole table
     std::vector<usage> getUsages(unsigned categoryId = 0);
     std::vector<shop> getShops();
-	std::vector<category1> getCategories();  //!< TODO: Rename struct
-    std::vector<bill1> getBills(const std::string& date = "", unsigned categoryId = 0, unsigned shopId = 0);
+	std::vector<category> getCategories();  //!< TODO: Rename struct
+    std::vector<bill> getBills(const std::string& date = "", unsigned categoryId = 0, unsigned shopId = 0);
 
 
 // Get one row from table

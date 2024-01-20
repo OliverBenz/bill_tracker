@@ -4,7 +4,7 @@
 
 namespace lib {
 
-struct category1 {
+struct category {
     unsigned id;
     std::string name;
 };

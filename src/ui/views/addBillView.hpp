@@ -8,7 +8,7 @@
 #include <QComboBox>
 
 #include "ui/models/addBillModel.hpp"
-#include "lib/bill.hpp"
+#include "lib/types/bill.hpp"
 
 class AddBillView : public QWidget {
     Q_OBJECT
@@ -18,7 +18,7 @@ public:
     ~AddBillView();
 
 signals:
-    void onNewBill(const lib::bill1&);
+    void onNewBill(const lib::bill&);
 
 private slots:
     void clearInputFields();

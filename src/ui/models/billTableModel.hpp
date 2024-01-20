@@ -1,7 +1,6 @@
 #pragma once
 
 #include "lib/types/bill.hpp"
-#include "lib/bill.hpp"
 
 #include <map>
 #include <vector>
@@ -12,9 +11,9 @@ class billTableModel {
 public:
 	billTableModel();
 
-	const std::vector<lib::bill1>& getAllData();
+	const std::vector<lib::bill>& getAllData();
 
-	void insertBill(const lib::bill1& bill);
+	void insertBill(const lib::bill& bill);
 /*
 	bool removeBill(const lib::bill& bill);
 	bool removeBill(int billId);
@@ -27,7 +26,7 @@ public:
 	const std::string& getUsageName(unsigned usageId);
 
 private:
-	std::vector<lib::bill1> m_data;
+	std::vector<lib::bill> m_data;
 	// Used to resolve the ids from the bill classes passed to insert().
 	std::map<unsigned, std::string> m_shops;
 	std::map<unsigned, std::string> m_categories;

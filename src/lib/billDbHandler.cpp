@@ -3,6 +3,7 @@
 #include <fmt/format.h>
 #include <iostream>
 #include <sqlite3.h>
+#include <cassert>
 
 namespace lib {
 
@@ -146,7 +147,7 @@ std::vector<shop> billDbHandler::getShops() {
 	return shops;
 }
 
-std::vector<category1> billDbHandler::getCategories() {
+std::vector<category> billDbHandler::getCategories() {
 	static constexpr char QUERY[] = "SELECT id, name FROM category";
 
 	sqlite3_stmt* statement;
@@ -154,7 +155,7 @@ std::vector<category1> billDbHandler::getCategories() {
 		std::cerr << "[DB] Error reading categories.\n";
 	}
 
-	std::vector<category1> categories;
+	std::vector<category> categories;
 	while(sqlite3_step(statement) == SQLITE_ROW) {
 		categories.emplace_back(
 				static_cast<unsigned>(sqlite3_column_int(statement, 0)),
@@ -166,7 +167,7 @@ std::vector<category1> billDbHandler::getCategories() {
 	return categories;
 }
 
-std::vector<bill1> billDbHandler::getBills(const std::string&, unsigned, unsigned) {
+std::vector<bill> billDbHandler::getBills(const std::string&, unsigned, unsigned) {
 	static constexpr char QUERY_FULL[] = "SELECT id, shopId, usageId, price, date, filename FROM bills";
 
     /*
@@ -182,7 +183,7 @@ std::vector<bill1> billDbHandler::getBills(const std::string&, unsigned, unsigne
         std::cerr << "[DB] Error reading bills.\n";
     }
 
-    std::vector<bill1> bills;
+    std::vector<bill> bills;
     while(sqlite3_step(statement) == SQLITE_ROW) {
         bills.emplace_back(
         static_cast<unsigned>(sqlite3_column_int(statement, 0)),

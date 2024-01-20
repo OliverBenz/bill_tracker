@@ -6,7 +6,7 @@ billTableModel::billTableModel() {
 	getAllData();
 }
 
-const std::vector<lib::bill1>& billTableModel::getAllData() {
+const std::vector<lib::bill>& billTableModel::getAllData() {
 	m_data = lib::getBills();
 
 	// Get shops
@@ -29,7 +29,7 @@ const std::vector<lib::bill1>& billTableModel::getAllData() {
 }
 
 
-void billTableModel::insertBill(const lib::bill1& bill) {
+void billTableModel::insertBill(const lib::bill& bill) {
 	m_data.emplace_back(bill);
 }
 

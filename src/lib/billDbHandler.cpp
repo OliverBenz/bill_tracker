@@ -1,5 +1,7 @@
 #include "billDbHandler.hpp"
 
+#include "appConfig.hpp"
+
 #include <format>
 #include <iostream>
 #include <sqlite3.h>
@@ -327,16 +329,15 @@ std::string billDbHandler::sanitize(const std::string& value) {
 }
 
 void billDbHandler::open() {
-    // TODO: Allow user to change db path
-    static constexpr char dbPath[] ="/home/oliver/.billtracker/data/expense_planner.db";
     static constexpr char FOREIGN_KEYS_ON[] = "PRAGMA foreign_keys = ON;";
 	if (m_sqlite->m_db != nullptr) {
 		return;
 	}
 
-	if (sqlite3_open(dbPath, &m_sqlite->m_db) != SQLITE_OK) {
+    const auto path = getDatabasePath() / "expense_planner.db";
+	if (sqlite3_open(path.c_str(), &m_sqlite->m_db) != SQLITE_OK) {
 		std::cerr << "[DB] Error connecting to Bill Database:  " << sqlite3_errmsg(m_sqlite->m_db) << std::endl;
-		throw std::invalid_argument(std::format("Could not open database: '{}'", dbPath));
+		throw std::invalid_argument(std::format("Could not open database: '{}'", path.c_str()));
 	} else {
 		std::cout << "[DB] Connected to Bill Database." << std::endl;
 	}

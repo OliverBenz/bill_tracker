@@ -6,6 +6,7 @@
 
 namespace lib {
 
+// TODO: Deprecated. Delete this. 
 class fileAccessHandler : public IDataAccessHandler {
 public:
 	fileAccessHandler() = default;

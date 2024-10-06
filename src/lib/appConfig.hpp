@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <filesystem>
 
 namespace lib {
 
@@ -12,9 +12,9 @@ inline static constexpr char APP_AUTHOR[] = "Oliver Benz";
 bool initializeConfig();
 
 //! Get the path to the database file.
-std::string getDatabasePath();
+std::filesystem::path getDatabasePath();
 
 //! Get the path to the backup folder.
-std::string getBackupPath();
+std::filesystem::path getBackupPath();
 
 }

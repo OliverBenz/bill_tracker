@@ -77,7 +77,7 @@ bool billDbHandler::initializeProgram() {
     const auto tables = std::array {"shops", "category", "usage", "bills"};
     if (std::all_of(tables.begin(), tables.end(), [this](const std::string& name){return tableExists(name);})) {
         std::cout << "[DB] All tables exist. Aborting initialization." << std::endl;
-        return true;
+        return false;
     }
 
     // Create tables

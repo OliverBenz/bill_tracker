@@ -12,9 +12,9 @@ static std::unique_ptr<IDataAccessHandler> getAccessHandler() {
 	return std::make_unique<fileAccessHandler>();
 }
 
-void initializeProgram() {
+bool initializeProgram() {
 	const auto accessHandler = std::make_unique<billDbHandler>();
-	accessHandler->initializeProgram();
+	return accessHandler->initializeProgram();
 }
 
 bool addBill(const bill& newBill) {

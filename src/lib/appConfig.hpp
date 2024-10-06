@@ -8,7 +8,7 @@ inline static constexpr char APP_NAME[] = "Bill Tracker";
 inline static constexpr char APP_AUTHOR[] = "Oliver Benz";
 
 //! Creates the config file if not yet exists.
-//! \returns False if it needs to be created but could not be.
+//! \returns True if the config was newly created.
 bool initializeConfig();
 
 //! Get the path to the database file.

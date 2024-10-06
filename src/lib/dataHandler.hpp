@@ -27,7 +27,8 @@ std::vector<category> getCategories();
 
 // ----- Application data -----
 //! Setup all required infrastructure for the program if necessary.
-void initializeProgram();
+//! @return True if the database was newly created.
+bool initializeProgram();
 
 //! Get path where file is stored from the settings.json file (with fileName).
 std::string getFilePath(file fileName);

@@ -9,10 +9,11 @@
 
 namespace lib {
 
-static const auto CONFIG_PATH = std::filesystem::path(getenv("HOME")) / "billtracker";
+static const auto CONFIG_PATH = std::filesystem::path(getenv("HOME")) / ".config/billtracker";
+static const auto CONFIG_FILE = CONFIG_PATH / "config.json";
 
-bool getSimpleKeyFromConfig(const char* name, std::string& result) {
-	std::ifstream jsonFile(CONFIG_PATH / "config.json");
+static bool getSimpleKeyFromConfig(const char* name, std::string& result) {
+	std::ifstream jsonFile(CONFIG_FILE);
 	nlohmann::json json = nlohmann::json::parse(jsonFile);
 
 	if(json.find(name) == json.end()) {
@@ -20,6 +21,26 @@ bool getSimpleKeyFromConfig(const char* name, std::string& result) {
     }
 
     result = json.at(name);
+    return true;
+}
+
+bool initializeConfig() {
+    static const auto DEFAULT_DB_PATH = std::filesystem::path(getenv("HOME")) / ".billtracker";
+    static const auto DEFAULT_BACKUP_PATH = std::filesystem::path(getenv("HOME")) / ".billtracker/backup";
+
+    if (std::filesystem::exists(CONFIG_FILE)) {
+        return false;
+    }
+
+	std::filesystem::create_directories(CONFIG_PATH);
+    nlohmann::json configBase;
+    configBase["pathDatabase"] = DEFAULT_DB_PATH;
+    configBase["pathBackup"]   = DEFAULT_BACKUP_PATH;
+
+    std::ofstream configFile(CONFIG_FILE);
+    configFile << configBase.dump(4);
+    configFile.close();
+
     return true;
 }
 

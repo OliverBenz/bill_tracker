@@ -1,24 +1,29 @@
 #include <QApplication>
 
 #include "lib/dataHandler.hpp"
+#include "lib/appConfig.hpp"
 #include "ui/application.hpp"
 
 #include "lib/billDbHandler.hpp"
 #include <iostream>
 
 int main(int argc, char** argv) {
-	lib::initializeProgram();
+    if(lib::initializeConfig()) {
+        std::cout << "[App] Newly created configuration file.\n";
+    }
+    if(lib::initializeProgram()) {
+        std::cout << "[App] Newly created database file.\n";
+    }
 
-    
     {
-        lib::billDbHandler db;
-        db.addShop("MPreis");
-        db.addShop("Amazon");
-        db.addShop("Interspar");
-        db.addCategory("Groceries");
-        db.addUsage("Necessities", 1);
-        db.addCategory("Work");
-        db.addUsage("Omicron", 2);
+        // lib::billDbHandler db;
+        // db.addShop("MPreis");
+        // db.addShop("Amazon");
+        // db.addShop("Interspar");
+        // db.addCategory("Groceries");
+        // db.addUsage("Necessities", 1);
+        // db.addCategory("Work");
+        // db.addUsage("Omicron", 2);
 
         // db.addBill("15.01.2024", 23.95f, 3, 1, "");
 

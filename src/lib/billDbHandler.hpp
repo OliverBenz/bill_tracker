@@ -17,6 +17,9 @@ public:
 	billDbHandler();
     ~billDbHandler();
 
+    //! Setup all required infrastructure for the program if necessary.
+    bool initializeProgram();
+
 // Add row to table
     bool addUsage(const std::string& name, int categoryId);
     bool addShop(const std::string& name);
@@ -46,6 +49,9 @@ public:
 private:
     //! Protect against sql-injection and make sure data properly formatted.
     std::string sanitize(const std::string& value);
+
+    //! Check if a table with the given name exists.
+    bool tableExists(const std::string& name);
 
     //! \note throws invalid_argument if the database file cannot be found.
 	void open();

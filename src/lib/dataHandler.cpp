@@ -13,7 +13,7 @@ static std::unique_ptr<IDataAccessHandler> getAccessHandler() {
 }
 
 void initializeProgram() {
-	const auto accessHandler = getAccessHandler();
+	const auto accessHandler = std::make_unique<billDbHandler>();
 	accessHandler->initializeProgram();
 }
 

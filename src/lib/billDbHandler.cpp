@@ -24,6 +24,74 @@ billDbHandler::~billDbHandler() {
     m_sqlite->m_db = nullptr;
 }
 
+bool billDbHandler::tableExists(const std::string& name) {
+    static constexpr char QUERY[] = "SELECT name FROM sqlite_master WHERE type='table' AND name='{}'";
+
+    bool exists = false;
+    sqlite3_stmt* stmt;
+    const auto query = std::format(QUERY, name);
+    if (sqlite3_prepare_v2(m_sqlite->m_db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            exists = true;
+        }
+        sqlite3_finalize(stmt);
+    }
+    return exists;
+}
+
+bool billDbHandler::initializeProgram() {
+	static constexpr char QUERY_CREATE_ALL[] = R"(
+	CREATE TABLE shops(
+        id INTEGER UNIQUE PRIMARY KEY,
+        name TEXT UNIQUE
+    );
+
+    CREATE TABLE category(
+        id INTEGER UNIQUE PRIMARY KEY,
+        name TEXT UNIQUE
+    );
+
+    CREATE TABLE usage(
+        id INTEGER UNIQUE PRIMARY KEY,
+        name TEXT,
+        categoryId INTEGER,
+
+        FOREIGN KEY (categoryId) REFERENCES category(id),
+                       UNIQUE (name, categoryId)
+    );
+
+    CREATE TABLE bills(
+        id INTEGER UNIQUE PRIMARY KEY,
+        date TEXT,
+        price REAL,
+        shopId INTEGER,
+        usageId INTEGER,
+        filename TEXT,
+
+        FOREIGN KEY(shopId) REFERENCES shops(id),
+                       FOREIGN KEY(usageId) REFERENCES usage(id)
+    );
+    )";
+
+    // Check tables already exist
+    const auto tables = std::array {"shops", "category", "usage", "bills"};
+    if (std::all_of(tables.begin(), tables.end(), [this](const std::string& name){return tableExists(name);})) {
+        std::cout << "[DB] All tables exist. Aborting initialization." << std::endl;
+        return true;
+    }
+
+    // Create tables
+    char* messageError;
+    if (sqlite3_exec(m_sqlite->m_db, QUERY_CREATE_ALL, nullptr, nullptr, &messageError) != SQLITE_OK) {
+        std::cerr << "[DB] Error initializing database: " << messageError << std::endl;
+        sqlite3_free(messageError);
+        return false;
+    }
+
+    std::cout << "[DB] Initialized database.\n";
+    return true;
+}
+
 bool billDbHandler::addCategory(const std::string& name) {
 	static constexpr char QUERY_FORMAT[] = "INSERT INTO category (name) VALUES ('{}');";
 

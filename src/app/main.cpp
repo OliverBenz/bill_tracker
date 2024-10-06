@@ -37,7 +37,6 @@ int main(int argc, char** argv) {
 
         // std::cout << db.getUsageName(1) << "\n";
     }
-    
 
 	QApplication app(argc, argv);
 

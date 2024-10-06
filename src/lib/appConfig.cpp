@@ -12,15 +12,53 @@ namespace lib {
 static const auto CONFIG_PATH = std::filesystem::path(getenv("HOME")) / ".config/billtracker";
 static const auto CONFIG_FILE = CONFIG_PATH / "config.json";
 
-static bool getSimpleKeyFromConfig(const char* name, std::filesystem::path& result) {
+static constexpr char KEY_PATH_DB[]     = "pathDatabase";
+static constexpr char KEY_PATH_BACKUP[] = "pathBackup";
+
+static bool getSimpleKeyFromConfig(const char* keyName, std::filesystem::path& result) {
 	std::ifstream jsonFile(CONFIG_FILE);
 	nlohmann::json json = nlohmann::json::parse(jsonFile);
 
-	if(json.find(name) == json.end()) {
+	if(json.find(keyName) == json.end()) {
 		return false;
     }
 
-    result = std::string(json.at(name));
+    result = std::string(json.at(keyName));
+    return true;
+}
+
+static bool setSimpleKeyInConfig(const char* keyName, const std::string& newValue) {
+
+    // Read json 
+    nlohmann::json configJson;
+    {
+        std::ifstream configFile(CONFIG_FILE);
+        if(!configFile.is_open()) {
+            std::cerr << "[CONFIG] Could not open config file for reading." << std::endl;
+            return false;
+        }
+        configFile >> configJson;
+        configFile.close();
+    }
+
+    // Update information
+    if(configJson.find(keyName) == configJson.end()) {
+        assert(false);
+        return false;
+    }
+    configJson[keyName] = newValue;
+
+    // Write json
+    {
+        std::ofstream configFile(CONFIG_FILE);
+        if(!configFile.is_open()) {
+            std::cerr << "[CONFIG] Could not open config file for writing." << std::endl;
+            return false;
+        }
+        configFile << configJson.dump(4) << "\n";
+        configFile.close();
+    }
+
     return true;
 }
 
@@ -32,30 +70,25 @@ bool initializeConfig() {
         return false;
 
     // Create default config.json file
-    if (!std::filesystem::exists(CONFIG_PATH))
-	    std::filesystem::create_directories(CONFIG_PATH);
+	std::filesystem::create_directories(CONFIG_PATH);
     nlohmann::json configBase;
-    configBase["pathDatabase"] = DEFAULT_DB_PATH;
-    configBase["pathBackup"]   = DEFAULT_BACKUP_PATH;
+    configBase[KEY_PATH_DB] = DEFAULT_DB_PATH;
+    configBase[KEY_PATH_BACKUP]   = DEFAULT_BACKUP_PATH;
 
     std::ofstream configFile(CONFIG_FILE);
-    configFile << configBase.dump(4);
+    configFile << configBase.dump(4) << "\n";
     configFile.close();
 
     // Create default file locations
-    if (!std::filesystem::exists(DEFAULT_DB_PATH))
-        std::filesystem::create_directories(DEFAULT_DB_PATH);
-    if (!std::filesystem::exists(DEFAULT_BACKUP_PATH))
-        std::filesystem::create_directories(DEFAULT_BACKUP_PATH);
+    std::filesystem::create_directories(DEFAULT_DB_PATH);
+    std::filesystem::create_directories(DEFAULT_BACKUP_PATH);
 
     return true;
 }
 
 std::filesystem::path getDatabasePath() {
-    static constexpr char KEY_NAME[] = "pathDatabase";
-
     std::filesystem::path path;
-    if (!getSimpleKeyFromConfig(KEY_NAME, path)) {
+    if (!getSimpleKeyFromConfig(KEY_PATH_DB, path)) {
         std::cerr << "[CONFIG] Could not find database location in config." << std::endl;
         assert(false);
     }
@@ -68,10 +101,8 @@ std::filesystem::path getDatabasePath() {
 }
 
 std::filesystem::path getBackupPath() {
-    static constexpr char KEY_NAME[] = "pathBackup";
-
     std::filesystem::path path;
-    if (!getSimpleKeyFromConfig(KEY_NAME, path)) {
+    if (!getSimpleKeyFromConfig(KEY_PATH_BACKUP, path)) {
         std::cerr << "[CONFIG] Could not find backup location in config." << std::endl;
         assert(false);
     }
@@ -83,5 +114,20 @@ std::filesystem::path getBackupPath() {
     return path;
 }
 
+bool setDatabasePath(const std::filesystem::path& path) {
+    if(setSimpleKeyInConfig(KEY_PATH_DB, path)) {
+        std::filesystem::create_directories(path);
+        return true;
+    }
+    return false;
+}
+
+bool setBackupPath(const std::filesystem::path& path ) {
+    if(setSimpleKeyInConfig(KEY_PATH_BACKUP, path)) {
+        std::filesystem::create_directories(path);
+        return true;
+    }
+    return false;
+}
 
 }

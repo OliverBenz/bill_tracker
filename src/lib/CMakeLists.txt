@@ -30,7 +30,7 @@ set(sources
 add_library(${targetName} STATIC ${headers} ${sources})
 
 # Linking
-target_link_libraries(${targetName} nlohmann_json::nlohmann_json fmt::fmt ${SQLite3_LIBRARIES})
+target_link_libraries(${targetName} nlohmann_json::nlohmann_json ${SQLite3_LIBRARIES})
 target_include_directories(${targetName} PRIVATE ${SQLite3_INCLUDE_DIRS})
 set_target_properties(${targetName} PROPERTIES FOLDER "${ideFolderSource}")
 

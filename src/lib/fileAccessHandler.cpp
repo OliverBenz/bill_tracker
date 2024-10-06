@@ -3,7 +3,7 @@
 #include "dateHandler.hpp"
 
 #include <nlohmann/json.hpp>
-#include <fmt/format.h>
+#include <format>
 
 #include <sstream>
 #include <fstream>
@@ -191,10 +191,10 @@ bool fileAccessHandler::createBackup() const {
 	}
 
 	// Create backup directory name
-	std::string dirName = fmt::format("{}/[{}]backup", backupDir, todaysDate());
+	std::string dirName = std::format("{}/[{}]backup", backupDir, todaysDate());
 	if(std::filesystem::exists(dirName)) {
 		std::size_t backupTracker = 1;
-		while(std::filesystem::exists(fmt::format("{}({})", dirName, backupTracker))) {
+		while(std::filesystem::exists(std::format("{}({})", dirName, backupTracker))) {
 			++backupTracker;
 		}
 		dirName += "(" + std::to_string(backupTracker) + ")";

@@ -1,6 +1,6 @@
 #include "billDbHandler.hpp"
 
-#include <fmt/format.h>
+#include <format>
 #include <iostream>
 #include <sqlite3.h>
 #include <cassert>
@@ -32,7 +32,7 @@ bool billDbHandler::addCategory(const std::string& name) {
 	}
 
     // Write into db
-    const std::string query = fmt::format(QUERY_FORMAT, sanitize(name));
+    const std::string query = std::format(QUERY_FORMAT, sanitize(name));
     char* messageError;
     if (sqlite3_exec(m_sqlite->m_db, query.c_str(), nullptr, nullptr, &messageError) != SQLITE_OK) {
         std::cerr << "[DB] Error Insertion: " << messageError << std::endl;
@@ -52,7 +52,7 @@ bool billDbHandler::addUsage(const std::string& name, int categoryId) {
     }
 
     // Write into db
-    const std::string query = fmt::format(QUERY_FORMAT, sanitize(name), categoryId);
+    const std::string query = std::format(QUERY_FORMAT, sanitize(name), categoryId);
     char* messageError;
     if (sqlite3_exec(m_sqlite->m_db, query.c_str(), nullptr, nullptr, &messageError) != SQLITE_OK) {
         std::cerr << "[DB] Error Insertion: " << messageError << std::endl;
@@ -72,7 +72,7 @@ bool billDbHandler::addShop(const std::string& name) {
     }
 
     // Write into db
-    const std::string query = fmt::format(QUERY_FORMAT, sanitize(name));
+    const std::string query = std::format(QUERY_FORMAT, sanitize(name));
     char* messageError;
     if (sqlite3_exec(m_sqlite->m_db, query.c_str(), nullptr, nullptr, &messageError) != SQLITE_OK) {
         std::cerr << "[DB] Error Insertion: " << messageError << std::endl;
@@ -92,7 +92,7 @@ bool billDbHandler::addBill(const std::string& date, float price, unsigned shopI
     }
 
     // Write into db
-    const std::string query = fmt::format(QUERY_FORMAT, sanitize(date), price, shopId, usageId, sanitize(filename));
+    const std::string query = std::format(QUERY_FORMAT, sanitize(date), price, shopId, usageId, sanitize(filename));
     char* messageError;
     if (sqlite3_exec(m_sqlite->m_db, query.c_str(), nullptr, nullptr, &messageError) != SQLITE_OK) {
         std::cerr << "[DB] Error Insertion: " << messageError << '\n';
@@ -108,7 +108,7 @@ std::vector<usage> billDbHandler::getUsages(unsigned categoryId) {
     static constexpr char QUERY_ALL[] = "SELECT id, categoryId, name FROM usage";
 	static constexpr char QUERY_SELECT[] = "SELECT id, categoryId, name FROM usage WHERE categoryId IS {}";
 
-	std::string sql = categoryId == 0 ? std::string(QUERY_ALL) : fmt::format(QUERY_SELECT, categoryId);
+	std::string sql = categoryId == 0 ? std::string(QUERY_ALL) : std::format(QUERY_SELECT, categoryId);
     sqlite3_stmt* statement;
     if(sqlite3_prepare_v2(m_sqlite->m_db, sql.c_str(), -1, &statement, nullptr) != SQLITE_OK) {
         std::cerr << "[DB] Error reading usages.\n";
@@ -174,7 +174,7 @@ std::vector<bill> billDbHandler::getBills(const std::string&, unsigned, unsigned
 	std::string sql = std::string(QUERY_FULL);
 	if(!date.empty()) {
 		// TODO: Continue this shit
-		sql += fmt::format(" WHERE date IS '{}'", date);
+		sql += std::format(" WHERE date IS '{}'", date);
 	}
  */
 
@@ -203,7 +203,7 @@ std::string billDbHandler::getUsageName(unsigned id) {
     static constexpr char QUERY[] = "SELECT name FROM usage WHERE id IS {}";
 
     sqlite3_stmt* statement;
-    if(sqlite3_prepare_v2(m_sqlite->m_db, fmt::format(QUERY, id).c_str(), -1, &statement, nullptr) != SQLITE_OK) {
+    if(sqlite3_prepare_v2(m_sqlite->m_db, std::format(QUERY, id).c_str(), -1, &statement, nullptr) != SQLITE_OK) {
         std::cerr << "[DB] Error reading usage name.\n";
     }
 
@@ -221,7 +221,7 @@ std::string billDbHandler::getShopName(unsigned id) {
     static constexpr char QUERY[] = "SELECT name FROM shops WHERE id IS {}";
 
     sqlite3_stmt* statement;
-    if(sqlite3_prepare_v2(m_sqlite->m_db, fmt::format(QUERY, id).c_str(), -1, &statement, nullptr) != SQLITE_OK) {
+    if(sqlite3_prepare_v2(m_sqlite->m_db, std::format(QUERY, id).c_str(), -1, &statement, nullptr) != SQLITE_OK) {
         std::cerr << "[DB] Error reading shop name.\n";
     }
 
@@ -239,7 +239,7 @@ std::string billDbHandler::getCategoryName(unsigned id) {
     static constexpr char QUERY[] = "SELECT name FROM category WHERE id IS {}";
 
     sqlite3_stmt* statement;
-    if(sqlite3_prepare_v2(m_sqlite->m_db, fmt::format(QUERY, id).c_str(), -1, &statement, nullptr) != SQLITE_OK) {
+    if(sqlite3_prepare_v2(m_sqlite->m_db, std::format(QUERY, id).c_str(), -1, &statement, nullptr) != SQLITE_OK) {
         std::cerr << "[DB] Error reading category name.\n";
     }
 
@@ -268,7 +268,7 @@ void billDbHandler::open() {
 
 	if (sqlite3_open(dbPath, &m_sqlite->m_db) != SQLITE_OK) {
 		std::cerr << "[DB] Error connecting to Bill Database:  " << sqlite3_errmsg(m_sqlite->m_db) << std::endl;
-		throw std::invalid_argument(fmt::format("Could not open database: '{}'", dbPath));
+		throw std::invalid_argument(std::format("Could not open database: '{}'", dbPath));
 	} else {
 		std::cout << "[DB] Connected to Bill Database." << std::endl;
 	}

@@ -39,40 +39,6 @@ void fileAccessHandler::initializeProgram() const {
 	initEmptyJsonFile(file::data, "\n\t\"shops\": [],\n\t\"categories\": []\n");
 }
 
-std::string fileAccessHandler::getAppAuthor() const {
-	std::ifstream jsonFile(m_filenameConfig);
-	nlohmann::json json = nlohmann::json::parse(jsonFile);
-
-	constexpr char app[] = "application";
-	constexpr char author[] = "author";
-
-	if(json.find(app) == json.end())
-		return "";
-
-	nlohmann::json jsonApp = json.at(app);
-	if(jsonApp.find(author) == jsonApp.end())
-		return "";
-
-	return jsonApp.at(author);
-}
-
-std::string fileAccessHandler::getAppName() const {
-	std::ifstream jsonFile(m_filenameConfig);
-	nlohmann::json json = nlohmann::json::parse(jsonFile);
-
-	constexpr char app[] = "application";
-	constexpr char name[] = "name";
-
-	if(json.find(app) == json.end())
-		return "";
-
-	nlohmann::json jsonApp = json.at(app);
-	if(jsonApp.find(name) == jsonApp.end())
-		return "";
-
-	return jsonApp.at(name);
-}
-
 std::string fileAccessHandler::getFilePath(const file fileName) const {
 	if(fileName == file::settings)
 		return {m_filenameConfig};

@@ -17,12 +17,6 @@ public:
 	//! Setup all required infrastructure for the program if necessary.
 	void initializeProgram() const override;
 
-	//! Get the application author name from the config file.
-	std::string getAppAuthor() const override;
-
-	//! Ge the application name from the config file.
-	std::string getAppName() const override;
-
 // File specific functions
 	//! Get path where file is stored from the settings.json file (with fileName).
 	std::string getFilePath(file fileName) const override;

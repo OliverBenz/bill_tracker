@@ -16,6 +16,7 @@ set(headers
 
     ${CMAKE_CURRENT_LIST_DIR}/dateHandler.hpp
     ${CMAKE_CURRENT_LIST_DIR}/dataHandler.hpp 
+    ${CMAKE_CURRENT_LIST_DIR}/appConfig.hpp 
     ${CMAKE_CURRENT_LIST_DIR}/IDataAccessHandler.hpp
     ${CMAKE_CURRENT_LIST_DIR}/fileAccessHandler.hpp
     ${CMAKE_CURRENT_LIST_DIR}/billDbHandler.hpp
@@ -23,6 +24,7 @@ set(headers
 set(sources 
     ${CMAKE_CURRENT_LIST_DIR}/dateHandler.cpp 
     ${CMAKE_CURRENT_LIST_DIR}/dataHandler.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/appConfig.cpp 
     ${CMAKE_CURRENT_LIST_DIR}/fileAccessHandler.cpp
     ${CMAKE_CURRENT_LIST_DIR}/billDbHandler.cpp
 )

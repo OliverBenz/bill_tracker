@@ -42,16 +42,6 @@ std::vector<category> getCategories() {
 	return accessHandler->getCategories();
 }
 
-std::string getAppAuthor() {
-	const auto accessHandler = getAccessHandler();
-	return accessHandler->getAppAuthor();
-}
-
-std::string getAppName() {
-	const auto accessHandler = getAccessHandler();
-	return accessHandler->getAppName();
-}
-
 std::string getFilePath(const file fileName) {
 	const auto accessHandler = getAccessHandler();
 	return accessHandler->getFilePath(fileName);

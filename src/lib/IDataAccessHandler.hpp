@@ -29,12 +29,6 @@ public:
 	//! Setup all required infrastructure for the program if necessary.
 	virtual void initializeProgram() const = 0;
 
-	//! Get the application author name from the config file.
-	virtual std::string getAppAuthor() const = 0;
-
-	//! Ge the application name from the config file.
-	virtual std::string getAppName() const = 0;
-
 // File specific functions
 	//! Get path where file is stored from the settings.json file (with fileName).
 	virtual std::string getFilePath(file fileName) const = 0;
